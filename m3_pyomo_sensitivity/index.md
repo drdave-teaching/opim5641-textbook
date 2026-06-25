@@ -1,5 +1,19 @@
 # Chapter 3 — Linear Programming in Pyomo & Sensitivity Analysis
 
+:::{admonition} 🔗 Notebooks for this chapter
+:class: seealso dropdown
+Open in Colab and **Runtime → Run all** — data loads from a stable link, nothing to upload.
+
+- **General Framework LP Pyomo answers** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/0_General_Framework_LP_Pyomo_answers.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/0_General_Framework_LP_Pyomo_answers.ipynb)
+- **General Framework LP Pyomo blank** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/0_General_Framework_LP_Pyomo_blank.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/0_General_Framework_LP_Pyomo_blank.ipynb)
+- **Allocation Models** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/1_Allocation_Models.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/1_Allocation_Models.ipynb)
+- **Covering Models** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/2_CoveringModels.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/2_CoveringModels.ipynb)
+- **Blending Models Coffee** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/3_BlendingModels_Coffee.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/3_BlendingModels_Coffee.ipynb)
+- **Blending Models Furniture** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/4_BlendingModels_Furniture.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/4_BlendingModels_Furniture.ipynb)
+- **Fertilizing Yard blank** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/FertilizingYard_blank.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/FertilizingYard_blank.ipynb)
+:::
+
+
 Chapter 2 solved LPs by hand. Now we solve them in **Pyomo**, a Python modeling language that lets you write a model that *looks like the math*, hand it to an industrial solver, and get the answer in milliseconds. Then we do the part that separates an analyst from a button-pusher: **sensitivity analysis** — asking what the solution would do if the numbers changed, and what each constraint is actually *worth*.
 
 ## 3.1 Building a model in Pyomo

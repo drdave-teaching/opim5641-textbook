@@ -1,5 +1,18 @@
 # Chapter 6 — Integer Programming
 
+:::{admonition} 🔗 Notebooks for this chapter
+:class: seealso dropdown
+Open in Colab and **Runtime → Run all** — data loads from a stable link, nothing to upload.
+
+- **Covering** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module5/Covering.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module5/Covering.ipynb)
+- **Fixed Variable Costs Mayhugh** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module5/Fixed_VariableCosts_Mayhugh.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module5/Fixed_VariableCosts_Mayhugh.ipynb)
+- **Integer Furniture** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module5/Integer_Furniture.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module5/Integer_Furniture.ipynb)
+- **Integer Project Selection** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module5/Integer_Project%20Selection.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module5/Integer_Project%20Selection.ipynb)
+- **Introduction and Activation Variables** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module5/Introduction%20and%20Activation%20Variables.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module5/Introduction%20and%20Activation%20Variables.ipynb)
+- **Maximum Covering** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module5/Maximum%20Covering.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module5/Maximum%20Covering.ipynb)
+:::
+
+
 Sometimes a fractional answer is fine — 12.6 tons of steel, round it off. But sometimes it isn't: you can't build 266.67 desks, open half a fire station, or fund 0.4 of a project. **Integer programming (IP)** forces decision variables to take whole-number values, and — surprisingly — that single restriction unlocks the ability to model **logic**: yes/no choices, "if this then that," "pick at most two." This is the most expressive chapter in the book.
 
 ## 6.1 Integer constraints

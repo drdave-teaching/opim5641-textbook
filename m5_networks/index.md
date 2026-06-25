@@ -1,5 +1,24 @@
 # Chapter 5 — Network Optimization
 
+:::{admonition} 🔗 Notebooks for this chapter
+:class: seealso dropdown
+Open in Colab and **Runtime → Run all** — data loads from a stable link, nothing to upload.
+
+- **Network Bonner Electronics** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/0_Network_BonnerElectronics.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/0_Network_BonnerElectronics.ipynb)
+- **Network Transshipment** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/0_Network_Transshipment.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/0_Network_Transshipment.ipynb)
+- **TSP Pyomo** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/0_TSP_Pyomo.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/0_TSP_Pyomo.ipynb)
+- **Network Transporting Coal** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/1_Network_TransportingCoal.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/1_Network_TransportingCoal.ipynb)
+- **Paper Recycling Reduction Flow** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/1_PaperRecycling_ReductionFlow.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/1_PaperRecycling_ReductionFlow.ipynb)
+- **TSP OR tools** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/1_TSP_OR_tools.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/1_TSP_OR_tools.ipynb)
+- **Assignment Swim Team** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/2_Assignment_SwimTeam.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/2_Assignment_SwimTeam.ipynb)
+- **Shortest Path Problem** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/2_Shortest_Path_Problem.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/2_Shortest_Path_Problem.ipynb)
+- **Assignment Engineers** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/3_Assignment_Engineers.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/3_Assignment_Engineers.ipynb)
+- **Matching Assignment Machine Scheduling** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/4_Matching_Assignment_MachineScheduling.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/4_Matching_Assignment_MachineScheduling.ipynb)
+- **Assignment Alternative Model** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/5_Assignment_Alternative_Model.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/5_Assignment_Alternative_Model.ipynb)
+- **Example Carpet** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/Example_Carpet.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/Example_Carpet.ipynb)
+:::
+
+
 A huge fraction of business problems are really **networks**: factories shipping to warehouses, people assigned to jobs, trucks routed through cities, inventory carried from one month to the next. Drawing the problem as **nodes and arcs** makes the structure obvious and the model almost write itself. This chapter covers the major network templates, all solved as linear (or integer) programs with CBC.
 
 ## 5.1 Minimum-cost flow
