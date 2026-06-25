@@ -1,0 +1,9 @@
+format: jb-book
+root: intro
+chapters:
+  - file: m1_foundations/index
+  - file: m2_lp_graphical_simplex/index
+  - file: m3_pyomo_sensitivity/index
+  - file: m4_nonlinear/index
+  - file: m5_networks/index
+  - file: m6_integer/index
