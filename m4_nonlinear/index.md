@@ -73,3 +73,83 @@ Because NLP solutions aren't guaranteed global, build two habits: **(1)** initia
 - **Facility location** (minimize Euclidean distance) is the canonical first NLP; the model scales past what you can draw.
 - The nonlinear toolkit covers **portfolio variance, regression-as-optimization, price×demand revenue, and EOQ inventory** — all real business decisions.
 ```
+
+
+---
+
+## 📌 Lecture key points
+
+*Distilled takeaways from the video lectures behind this chapter — click each to expand.*
+
+
+:::{admonition} Introduction to Nonlinear Programming
+:class: note dropdown
+- Nonlinear = objective/constraints with powers, fractions, sqrt, or **products of variables**.
+- **Easier to model** (no linearity restriction) but **harder to solve**.
+- **No global guarantee** — solvers may return a local optimum.
+- **Initialize** decision variables and re-solve from several starting points.
+- Prefer **linear** whenever you can; use nonlinear when you must.
+:::
+
+:::{admonition} Local Optimum vs Global Optimum
+:class: note dropdown
+- A nonlinear solver is a **"hill climber in the fog"** — only feels the local slope.
+- It may stop at a **local** peak, not the global one.
+- Defense: **multiple starting points** + sensible **bounds**.
+- Don't trust "optimal" from a nonlinear solver as a global guarantee.
+- Visualized on a multi-peak polynomial surface.
+:::
+
+:::{admonition} Facility Location Model (Simple) — Parts 1–2
+:class: note dropdown
+- Decision variables = the center's **(x, y)**; objective = total **Euclidean distance** (the sqrt → nonlinear).
+- Solver = **Ipopt** (not the linear CBC).
+- Compute pairwise distances with a loop + a `dist` variable per store; sum them.
+- Optimum = the **geographic center of mass**; the model scales past what you can eyeball (3-D, 4-D…).
+- Square root = raising to the **0.5 power**.
+:::
+
+:::{admonition} Model — Advertising Budget
+:class: note dropdown
+- Maximize **profit = revenue − cost** across 4 quarters (16 decision variables).
+- **Seasonal factors** (0.9/1.1/0.8/1.2) change demand by quarter.
+- Decompose into revenue and cost components → objective writes itself.
+- Budget constraint: total spend ≤ \$40,000.
+- Overhead = 15% of revenue; unit cost × units; fixed sales expense.
+:::
+
+:::{admonition} Incorporation of a Lower Bound
+:class: note dropdown
+- Adding a constraint (≥ \$8k/quarter) **shrinks** the feasible set → objective gets **worse**.
+- If a configuration were attractive, the freer model would've picked it already.
+- Use **`setlb`/`setub`** to set bounds; tip: a clear **upper bound** = the total budget.
+- Re-solve from different starts; Ipopt "optimal" isn't a global guarantee.
+- Bounds both help the solver and keep it in sensible regions.
+:::
+
+:::{admonition} CTC (Coastal Telephone) — Description & Solution
+:class: note dropdown
+- Choose **day/evening prices** to **maximize revenue**; demand is a function of prices.
+- **Nonlinear** because revenue = price × demand (two decision-related quantities multiplied) → **Ipopt**.
+- Watch units: demand is **per minute** × minutes (10h day / 14h evening × 60).
+- Part 2 adds a constraint (**day ≥ evening + 2¢**) for a more *reasonable* solution.
+- Set lower/upper price bounds from tacit business knowledge.
+:::
+
+:::{admonition} Campbell (Campo Motors) — Description
+:class: note dropdown
+- Set **truck/wagon prices** to **maximize profit**; demand depends on price.
+- **Nonlinear** (demand × price); needs Ipopt.
+- Preparation-time constraint (3h truck, 2h wagon, ≤ 250h) — like an LP resource limit.
+- Careful with **bounds**: price ≥ cost, demand ≥ 0.
+- Bounds help the solver and rule out nonsense.
+:::
+
+:::{admonition} Woodstock (EOQ Inventory) — Description & Solution
+:class: note dropdown
+- Choose **order quantity Q** per product to minimize ordering + inventory cost.
+- **Nonlinear** because **Q is in the denominator** (D/Q orders) → Ipopt.
+- Average inventory ≈ **Q/2**; carrying cost h = % × purchase cost.
+- Shared **warehouse-capacity** constraint ties the four products together.
+- Separate model/data, name variables to match the problem (K, h…), print the model to debug.
+:::

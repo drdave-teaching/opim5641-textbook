@@ -51,3 +51,83 @@ For a **minimization** problem we lean on a beautiful fact — **duality**. Ever
 - **Simplex** generalizes corner-walking via **slack variables**, a **tableau** (objective in the bottom row), and **pivots** (entering = most-negative bottom row; departing = minimum ratio test).
 - **Duality** solves minimization by transposing to a maximization — and seeds the **shadow prices** of Chapter 3.
 ```
+
+
+---
+
+## 📌 Lecture key points
+
+*Distilled takeaways from the video lectures behind this chapter — click each to expand.*
+
+
+:::{admonition} Linear Functions
+:class: note dropdown
+- An LP has a **linear** objective and **linear** constraints (multiply by constants, then add).
+- You **cannot** multiply variables, use logs/exp/abs/sqrt/fractions, or `if` conditions.
+- **Linearity guarantees** an efficiently-findable optimum (huge advantage).
+- Nonlinear is more expressive but loses optimality guarantees.
+- History: **Dantzig** (Simplex) and **von Neumann** (duality); *Good Will Hunting* legend.
+:::
+
+:::{admonition} Simple Bounds
+:class: note dropdown
+- **Upper bounds** for a maximization can be found by deliberately **over-estimating** the objective.
+- Inflate the objective coefficients (must be **≥** the real ones) and relax the variable limits.
+- A valid bound proves "we cannot make more than \$X."
+- Tightening the bound (e.g., $10→$8 coefficients) narrows the gap to the true optimum.
+- Bounds make a solution *provably* good.
+:::
+
+:::{admonition} Objective Function (Pyomo)
+:class: note dropdown
+- `Objective(expr=..., sense=maximize)` — a direct transcription of the math.
+- Pyomo knows `model.c`, `model.t` etc. because the variables were declared.
+- Set **`sense`** to maximize or minimize.
+- Build a big expression separately (loops/ifs) then pass it in.
+- Linear only: multiply by constants and add.
+:::
+
+:::{admonition} Constraints (Pyomo)
+:class: note dropdown
+- A `Constraint` needs an **expression with a sign and a right-hand side**.
+- **Equality needs `==`** (double equals), or Python won't understand it.
+- **Name constraints meaningfully** (`fabrication`, not `Constraint1`) — pays off in reports.
+- Bounds can be set on variables or via constraints (don't double up).
+- Order (LHS vs RHS) is flexible; keep variables on the left for readability.
+:::
+
+:::{admonition} Simplex for 2D Maximization — Parts 1–3
+:class: note dropdown
+- Put the LP in **standard form** with **slack variables** (unused resource).
+- **Basic** (in solution) vs **nonbasic** (set to 0); start at the origin.
+- **Pivot:** entering var = most-negative bottom row; departing = **minimum ratio test**.
+- Keep pivoting until **no negatives in the bottom row** = optimum.
+- It's the graphical method's "walk to a better corner," generalized to any dimension.
+:::
+
+:::{admonition} Simplex for 3D Maximization (Soup to Nuts)
+:class: note dropdown
+- Same logic with an extra variable x3.
+- **Ties for the entering variable** → pick at random.
+- Read the optimal solution off the final tableau.
+- Demonstrates Simplex scaling beyond 2-D.
+- The algorithm is mechanical and dimension-agnostic.
+:::
+
+:::{admonition} Simplex for 2D Minimization — Parts 1–2
+:class: note dropdown
+- Minimization solved via the **dual**: build an augmented matrix and solve as a **maximization**.
+- **von Neumann duality** — read the min answer off the max tableau.
+- (Dave's convention: objective function in the **bottom row**.)
+- Same pivoting machinery.
+- Dual values foreshadow **shadow prices** (Module 3).
+:::
+
+:::{admonition} Simplex for 3D Minimization
+:class: note dropdown
+- Minimize w with all "≥" constraints.
+- Augmented matrix → **transpose** → solve the dual → read the final tableau.
+- Generalizes the dual approach to 3-D.
+- Reinforces primal–dual relationship.
+- Completes the Simplex toolkit.
+:::

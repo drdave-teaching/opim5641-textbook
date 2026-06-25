@@ -83,3 +83,38 @@ Plugging in the *average* return gives you one number and a false sense of certa
 - **Monte Carlo** turns uncertainty into a distribution of outcomes; report a *range*, not a point.
 - Keep Mencken and Box on your shoulder: a model should be **useful**, neither naïvely simple nor needlessly complex.
 ```
+
+
+---
+
+## 📌 Lecture key points
+
+*Distilled takeaways from the video lectures behind this chapter — click each to expand.*
+
+
+:::{admonition} Brief Introduction to Optimization
+:class: note dropdown
+- Optimization = make the **best decision** subject to real-world **constraints**.
+- A simple universal strategy ("solve" almost anything) sets up the course.
+- Introduces the mindset: translate a business problem into a model.
+- Optimization is everywhere in operations and business.
+- Foundation for every later technique.
+:::
+
+:::{admonition} Building Blocks of a Model
+:class: note dropdown
+- Every model has **four parts**: decision variables, objective, constraints, parameters/data.
+- You optimize **one** objective — maximize profit *or* minimize cost, not both.
+- These four building blocks "appear in virtually every problem in the class."
+- Running example: **Veerman Furniture** (chairs/desks/tables).
+- Spotting the four parts in a word problem is the core modeling skill.
+:::
+
+:::{admonition} Brute-force Search
+:class: note dropdown
+- **Try every combination, keep the best** — guaranteed correct.
+- It is **catastrophically inefficient** (combinatorial explosion).
+- Generic framework: loop over options, check feasibility, track the best objective.
+- Motivates why we need real algorithms (LP/Simplex).
+- (Mencken: "for every complex problem there is an answer that is clear, simple, and wrong.")
+:::

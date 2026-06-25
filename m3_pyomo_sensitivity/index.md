@@ -77,3 +77,56 @@ You can pull all of this in Python. A quick look comes straight from the solved 
 - **Reduced cost** is the shadow-price analog for a variable at a bound.
 - Use **shadow prices to find the bottleneck** and decide where to invest; the **allowable range** says how far the linear prediction holds.
 ```
+
+
+---
+
+## 📌 Lecture key points
+
+*Distilled takeaways from the video lectures behind this chapter — click each to expand.*
+
+
+:::{admonition} Introduction to Sensitivity Analysis
+:class: note dropdown
+- Solving gives *a* plan; sensitivity asks **what if the numbers change**.
+- A **binding** constraint is met at equality (LHS = RHS) — a bottleneck.
+- Binding constraints have **corners** (Simplex/graphical link) — no coincidence.
+- Concepts to master: reduced cost, **shadow prices**, allowable intervals, binding constraints.
+- Tells the decision-maker **where the leverage is**.
+:::
+
+:::{admonition} Generating a Sensitivity Report
+:class: note dropdown
+- Use **GLPK** to produce a full sensitivity report from the solved model.
+- Report covers both **variables** and **constraints**.
+- The "ugly" code is copy-paste; it yields the analysis you need.
+- Report uses a **dot (`.`)** instead of 0 for zero activity.
+- The report is the artifact you interrogate.
+:::
+
+:::{admonition} Variables and Reduced Cost
+:class: note dropdown
+- **Reduced cost** = impact on the optimum of changing a variable's **relevant bound**.
+- Nonzero only when a variable is **at a bound** (e.g., tables at upper, chairs at lower).
+- **Positive** for raising a max (tables), **negative** for forcing a min (chairs), **0** if interior (desks).
+- **Objective-coefficient range** = how far you can change a coefficient and keep the same solution.
+- "Activity" column = each variable's optimal value.
+:::
+
+:::{admonition} Constraints and Shadow Price
+:class: note dropdown
+- **Shadow price** = change in optimal objective per **one more unit of the RHS**.
+- Nonzero only for **binding** constraints; non-binding have **slack** and shadow price 0.
+- Example: fabrication binding → **+1 hour = +\$4, −1 hour = −\$4**.
+- New objective = old + (ΔRHS)×(shadow price), valid within the **activity range**.
+- Within the range you know the objective change, **not** exactly the new solution.
+:::
+
+:::{admonition} Sensitivity Analysis with Pyomo
+:class: note dropdown
+- A few lines extract **dual values** (shadow prices) and **slacks** directly from Pyomo.
+- Reduced costs via a dictionary keyed by the decision variable.
+- Pyomo **can't** give the full allowable intervals — use the GLPK report for those.
+- Binding constraint = the **bottleneck**; move resources toward it to raise profit.
+- Quick in-Python look vs the fuller GLPK report.
+:::

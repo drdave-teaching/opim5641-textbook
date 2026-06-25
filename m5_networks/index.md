@@ -73,3 +73,83 @@ Specialized algorithms solve pure network problems fast — but the **LP/Pyomo f
 - **Assignment** = binary one-to-one matching (each row sums to 1, each column sums to 1).
 - **Shortest path, transshipment, and multiperiod inventory** are all the same flow template with different $b$ values — and the LP form flexes when the real world adds constraints.
 ```
+
+
+---
+
+## 📌 Lecture key points
+
+*Distilled takeaways from the video lectures behind this chapter — click each to expand.*
+
+
+:::{admonition} Introduction to Network Problems
+:class: note dropdown
+- Networks = **nodes and arcs** with one-way flow; many supply-chain applications.
+- Subtypes; this series starts with **minimum-cost flow** (min-cost shipping).
+- Recall allocation (≤), covering (≥), blending models.
+- Think in terms of **supply nodes** and **demand nodes**.
+- Graphical intuition → the algebra of pairwise arcs.
+:::
+
+:::{admonition} Bonner Electronics — Min-Cost Flow — Parts 1–2
+:class: note dropdown
+- Ship from 3 plants to 4 warehouses at **minimum cost**; CBC solver.
+- **Supply constraints "≤"** (capacity), **demand constraints "≥"** (meet demand).
+- Assume **supply ≥ demand** (else a harder problem).
+- Use **dictionaries** (key:value) + **tuples** for pairwise arcs; nested loops/list comprehension build the objective.
+- Pyomo-Cookbook style: change values to solve any same-shape problem.
+:::
+
+:::{admonition} Description of Banana Inc.
+:class: note dropdown
+- Factories → **depots (transshipment)** → warehouses min-cost flow.
+- Node value **b**: **+ for supply, 0 for transshipment, − (negative of demand) for demand** — the classic trap.
+- Each arc has lower bound 0, an upper-bound capacity, and a per-unit cost.
+- Supply (5,500) > demand (4,500) → production is the limiting factor.
+- Maps the concepts (supply/demand/transshipment) onto a concrete graphic.
+:::
+
+:::{admonition} Lannon Project Revisited + Pyomo Model
+:class: note dropdown
+- Plants → distributors with **production + transportation** costs (minimize total).
+- New twist: if you ship from Atlanta at all, ship **≥ 6,000** (a **multiple-range / fixed-charge**).
+- Model with `x ≥ 6000·y` and `x ≤ 18000·y` (y binary) — if y=0 then x=0.
+- Build bounds with a **function** indexed by arcs (order must match).
+- Flow balance: + for supply, − for demand; equality on demand (minimization won't overship).
+:::
+
+:::{admonition} Min-Cost Flow — Transporting Coal
+:class: note dropdown
+- Objective includes **production cost AND shipping cost** (not just shipping).
+- Production cost dwarfs shipping; can't decide by hand → need a model.
+- 16 pairwise arcs (4 mines × 4 plants); naming `m11…m44`.
+- Supply ("≤") and demand ("≥") constraints; CBC.
+- Pyomo-Cookbook style with LaTeX-pretty formulas.
+:::
+
+:::{admonition} Solving Multiperiod Models
+:class: note dropdown
+- Model **time as a network**: each month a node, production in, demand out.
+- **Inventory arcs (I)** carry leftover product to the next month.
+- Fix demand by setting an arc's lower = upper bound (so it's constant).
+- No inventory after the last month (production = total demand).
+- All nodes become transshipment by this modeling trick.
+:::
+
+:::{admonition} Formulation of the Shortest Path Problem
+:class: note dropdown
+- Shortest path as min-cost flow: origin **b=+1**, destination **b=−1**, others transshipment.
+- Arc cost = distance (or time/money); lower 0, **upper 1** per arc.
+- Exercise: convince yourself every arc's upper bound is 1.
+- **Dijkstra's** algorithm is faster for the vanilla problem...
+- ...but the **LP formulation flexes** when you add constraints.
+:::
+
+:::{admonition} Assignment Problems — Swim Team
+:class: note dropdown
+- Assign *n* things to *n* jobs one-to-one (swimmers→strokes, machines→jobs).
+- **Binary** variables; each person does one job, each job done by one person (equalities).
+- Rows vs columns of the time matrix = the two constraint families.
+- Generalizes to **machine scheduling**.
+- Compact Pyomo-Cookbook form vs longhand; same answer, different tinkerability.
+:::

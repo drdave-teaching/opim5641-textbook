@@ -71,3 +71,83 @@ You build all of this in Pyomo exactly as before — binary `Var(domain=Binary)`
 - **Logical rules** become algebra: mutually exclusive, contingent, exactly-one, at-least-*k* — and the **truth-table recipe** handles anything.
 - Solve it all with **CBC**; the leap is realizing business logic *is* linear constraints on binaries.
 ```
+
+
+---
+
+## 📌 Lecture key points
+
+*Distilled takeaways from the video lectures behind this chapter — click each to expand.*
+
+
+:::{admonition} Introduction to Integer Programming (+ Intro to IP — Furniture)
+:class: note dropdown
+- Fractional answers (266.67 desks) are often unacceptable → force **integers**.
+- Change the domain `NonNegativeReals` → **`NonNegativeIntegers`** (one word).
+- **Integrality is a constraint** → integer optimum is never better (furniture: \$8,200 → \$8,199).
+- Two schools: **round** the fractional answer, or **enforce** integers.
+- As modeler, decide if the fractional "noise" matters.
+:::
+
+:::{admonition} Application — Linking Constraints (Portfolio)
+:class: note dropdown
+- **Linking constraint**: invest in a stock only if you invest **≥ 10%**.
+- Adds threshold-minimum logic to portfolio allocation.
+- Smoother efficient-frontier trade-off (a policy decision).
+- Consistent naming; cross out previously-infeasible constraints.
+- Shows the flexibility/policy power of integer/linking constraints.
+:::
+
+:::{admonition} Fire Station Problem (+ Weighted + Solving Weighted)
+:class: note dropdown
+- **Set covering**: every district covered by a station in it or a **neighbor**; minimize # stations.
+- Constraint: sum of activation variables over a district + neighbors **≥ 1**.
+- **Weighted** version: maximize **covered demand** with **at most k** stations (cardinality).
+- Careful: **activation ≠ coverage**; count a covered demand **only once**.
+- Bind the two binary sets so coverage requires an activated neighbor.
+:::
+
+:::{admonition} Project Selection — Intro + 1st/2nd/Last Constraints + Pyomo Model
+:class: note dropdown
+- Maximize total **NPV** by selecting projects (binary activation variables).
+- **Logical constraints** as algebra: mutually exclusive (y1+y2≤1), contingent (y3≤y4), exactly-one (y4+y6=1), at-least-k (Σ≥4).
+- The **recipe**: truth table → forbid "no" rows → one inequality each.
+- Model **each constraint independently** (ignore the others while writing it).
+- Smart one-liners are fine, but the recipe always works.
+:::
+
+:::{admonition} Formulation and Pyomo Code — Setup Costs
+:class: note dropdown
+- **Fixed-charge**: pay a setup cost to operate a plant at all (independent of volume).
+- Two variable types: integer **production** + binary **activation**.
+- **Linking constraint** `x ≤ M·y`: y=0 → x=0; y=1 → up to capacity.
+- Objective: profit per unit − setup cost × activation.
+- Solve with **CBC** (handles integers).
+:::
+
+:::{admonition} Banana Problem & E.R. Problem
+:class: note dropdown
+- **Banana** (smartphones): activation variables for plants with **fixed operation costs**; maximize profit.
+- **E.R.**: a covering problem — pick doctors so each procedure has ≥ 1 capable doctor; minimize salary cost.
+- Both = binary activation variables + covering/fixed-charge patterns.
+- E.R. solution: cost \$600, doctors 1 & 2.
+- Same recipe as fire station / project selection.
+:::
+
+:::{admonition} Mixed Problems
+:class: note dropdown
+- Real problems mix **"≤" and "≥"** constraints (extend the diet problem).
+- A maximization with only lower bounds is **unbounded** → add a **budget** ("≤").
+- **Packing↔maximization, covering↔minimization** duality helps diagnose crazy solutions.
+- "Weird" optimal solutions (all fish) are correct given the constraints → add realism (min amounts, equalities).
+- Use `setlb`, `==` for equalities.
+:::
+
+:::{admonition} Excel appendix (Intro/Spreadsheet Org, Solving in Excel, Excel vs Python)
+:class: note dropdown
+- **Frontline Solver** + `SUMPRODUCT` build LP models in Excel; color-code input/variables/objective/constraints.
+- Excel pros: easy to **test/play**, familiar, fast prototyping, single-screen for small problems, condensed **sensitivity report**.
+- Excel cons: **doesn't scale**, hides constraints in cells (poor explainability), OS-dependent, manual to re-shape.
+- Python wins for **scalability, data science, explainability, free/Colab, reproducibility**.
+- Use Excel for quick/small/results-only; **Python for real-world** optimization.
+:::
