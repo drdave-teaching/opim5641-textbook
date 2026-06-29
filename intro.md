@@ -1,5 +1,10 @@
 # Preface
 
+:::{admonition} ⚠️ Work in progress
+:class: warning
+These materials are a **living draft** — actively being written, revised, and expanded from my lecture transcripts and course notebooks. Expect rough edges, gaps, and changes between visits. This is a teaching companion, **not a final or official reference**. Spot something off? That's expected — it's a work in progress!
+:::
+
 Welcome to **Business Decision Modeling — Optimization with Python**, the book edition of **OPIM 5641** at the University of Connecticut.
 
 Optimization is the science of making the **best possible decision** subject to the constraints of the real world — how many chairs and desks to build, where to put a warehouse, how to route product through a supply chain, which projects to fund. This book teaches you to take a messy business problem, translate it into a precise mathematical model, and solve it in Python with **Pyomo**. The voice is casual; the modeling is rigorous; the code is real and runs.
