@@ -1,0 +1,636 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Chapter 2 — Linear Programming: Graphical Method &amp; Simplex &#8212; Business Decision Modeling — Optimization with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'm2_lp_graphical_simplex/index';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Chapter 3 — Linear Programming in Pyomo &amp; Sensitivity Analysis" href="../m3_pyomo_sensitivity/index.html" />
+    <link rel="prev" title="Chapter 1 — Foundations of Optimization" href="../m1_foundations/index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Business Decision Modeling — Optimization with Python</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Preface
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../m1_foundations/index.html">Chapter 1 — Foundations of Optimization</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Chapter 2 — Linear Programming: Graphical Method &amp; Simplex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m3_pyomo_sensitivity/index.html">Chapter 3 — Linear Programming in Pyomo &amp; Sensitivity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m4_nonlinear/index.html">Chapter 4 — Nonlinear Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m5_networks/index.html">Chapter 5 — Network Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m6_integer/index.html">Chapter 6 — Integer Programming</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/drdave-teaching/opim5641-textbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/m2_lp_graphical_simplex/index.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Chapter 2 — Linear Programming: Graphical Method & Simplex</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-graphical-method-2-d">2.1 The graphical method (2-D)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simplex-walking-the-corners-in-any-dimension">2.2 Simplex — walking the corners in any dimension</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrap-up">Wrap-up</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lecture-key-points">📌 Lecture key points</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="chapter-2-linear-programming-graphical-method-simplex">
+<h1>Chapter 2 — Linear Programming: Graphical Method &amp; Simplex<a class="headerlink" href="#chapter-2-linear-programming-graphical-method-simplex" title="Link to this heading">#</a></h1>
+<div class="seealso dropdown admonition">
+<p class="admonition-title">🔗 Notebooks for this chapter</p>
+<p>Open in Colab and <strong>Runtime → Run all</strong> — data loads from a stable link, nothing to upload.</p>
+<ul class="simple">
+<li><p><strong>Big Ideas Simplex vs Graphical</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/0_BigIdeas_Simplex_vs_Graphical.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/0_BigIdeas_Simplex_vs_Graphical.ipynb">GitHub</a></p></li>
+<li><p><strong>General Simplex Maximization Steps</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/1_General%20Simplex%20Maximization%20Steps.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/1_General%20Simplex%20Maximization%20Steps.ipynb">GitHub</a></p></li>
+<li><p><strong>The Simplex Method Maximization2D</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/2_TheSimplexMethod_Maximization2D.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/2_TheSimplexMethod_Maximization2D.ipynb">GitHub</a></p></li>
+<li><p><strong>The Simplex Method Maximization 3D</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/3_TheSimplexMethod_Maximization_3D.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/3_TheSimplexMethod_Maximization_3D.ipynb">GitHub</a></p></li>
+<li><p><strong>General Simplex Minimization Steps</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/4_General%20Simplex%20Minimization%20Steps.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/4_General%20Simplex%20Minimization%20Steps.ipynb">GitHub</a></p></li>
+<li><p><strong>The Simplex Method Minimization2D</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/5_TheSimplexMethod_Minimization2D.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/5_TheSimplexMethod_Minimization2D.ipynb">GitHub</a></p></li>
+<li><p><strong>The Simplex Method Minimization3D</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/6_TheSimplexMethod_Minimization3D.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/6_TheSimplexMethod_Minimization3D.ipynb">GitHub</a></p></li>
+<li><p><strong>The Simplex Method Maximization Mixed</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/7_TheSimplexMethod_Maximization_Mixed.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/7_TheSimplexMethod_Maximization_Mixed.ipynb">GitHub</a></p></li>
+<li><p><strong>Big Ideas Graphical</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/BigIdeas_Graphical.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/BigIdeas_Graphical.ipynb">GitHub</a></p></li>
+<li><p><strong>Graphical Method Practice Problems Advanced</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/GraphicalMethod_PracticeProblems_Advanced.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/GraphicalMethod_PracticeProblems_Advanced.ipynb">GitHub</a></p></li>
+<li><p><strong>Wyndor Glass Simplex Method</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/Wyndor_Glass_Simplex_Method.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/Wyndor_Glass_Simplex_Method.ipynb">GitHub</a></p></li>
+<li><p><strong>a Graphical Method Maximize</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/a_GraphicalMethod_Maximize.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/a_GraphicalMethod_Maximize.ipynb">GitHub</a></p></li>
+<li><p><strong>a Graphical Method Maximize guided</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/a_GraphicalMethod_Maximize_guided.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/a_GraphicalMethod_Maximize_guided.ipynb">GitHub</a></p></li>
+<li><p><strong>a Graphical Method Maximize guided blank</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/a_GraphicalMethod_Maximize_guided_blank.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/a_GraphicalMethod_Maximize_guided_blank.ipynb">GitHub</a></p></li>
+<li><p><strong>b Graphical Method Minimize</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/b_GraphicalMethod_Minimize.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/b_GraphicalMethod_Minimize.ipynb">GitHub</a></p></li>
+<li><p><strong>b Graphical Method Minimize guided</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/b_GraphicalMethod_Minimize_guided.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/b_GraphicalMethod_Minimize_guided.ipynb">GitHub</a></p></li>
+<li><p><strong>c Graphical Method Redundant</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/c_GraphicalMethod_Redundant.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/c_GraphicalMethod_Redundant.ipynb">GitHub</a></p></li>
+<li><p><strong>d Graphical Method Infeasible</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/d_GraphicalMethod_Infeasible.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/d_GraphicalMethod_Infeasible.ipynb">GitHub</a></p></li>
+<li><p><strong>e Graphical Method Alternate Optimal Solutions</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/e_GraphicalMethod_AlternateOptimalSolutions.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/e_GraphicalMethod_AlternateOptimalSolutions.ipynb">GitHub</a></p></li>
+<li><p><strong>f Graphical Method Unbounded Solutions</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/f_GraphicalMethod_UnboundedSolutions.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module2/f_GraphicalMethod_UnboundedSolutions.ipynb">GitHub</a></p></li>
+</ul>
+</div>
+<p>A <strong>linear program (LP)</strong> is an optimization problem where the objective and all constraints are <strong>linear</strong> — every variable appears only multiplied by a constant and added up, never multiplied together, raised to powers, or buried in functions. That restriction sounds limiting, but it buys us something priceless: a <strong>guarantee</strong> that we can find the true optimum efficiently. This chapter gives you both the <em>geometry</em> of LP (the graphical method) and the <em>algorithm</em> that scales it to any number of variables (Simplex).</p>
+<section id="the-graphical-method-2-d">
+<h2>2.1 The graphical method (2-D)<a class="headerlink" href="#the-graphical-method-2-d" title="Link to this heading">#</a></h2>
+<p>With two decision variables you can literally <em>draw</em> the problem. Take Flair’s Furniture — maximize profit over tables <span class="math notranslate nohighlight">\(T\)</span> and chairs <span class="math notranslate nohighlight">\(C\)</span> subject to a few resource constraints. Each constraint is a line; the inequality keeps one side of it. <strong>Shade the infeasible side of every constraint, and what’s left unshaded is the feasible region</strong> — the set of all decision combinations that obey every rule.</p>
+<div class="important admonition">
+<p class="admonition-title">The corner-point theorem</p>
+<p>For a linear program, <strong>the optimum always sits at a corner (vertex) of the feasible region.</strong> Why? The objective <span class="math notranslate nohighlight">\(profit = 7T + 5C\)</span> defines parallel “level lines”; pushing them in the improving direction, the last point of contact with the feasible region is a corner. So you don’t need to check infinitely many points — just evaluate the objective at each corner and take the best. (For Flair’s Furniture that’s $4,040 at 320 tables and 260 chairs.)</p>
+</div>
+<p>Four special cases are worth seeing once so you recognize them forever:</p>
+<ul class="simple">
+<li><p><strong>Redundant constraint</strong> — a constraint that doesn’t touch the feasible region; removing it changes nothing.</p></li>
+<li><p><strong>Infeasible</strong> — constraints conflict, so the feasible region is empty; no solution exists.</p></li>
+<li><p><strong>Unbounded</strong> — the feasible region runs off to infinity in the improving direction; usually a sign you forgot a constraint.</p></li>
+<li><p><strong>Alternate optima</strong> — the objective level line is parallel to a binding constraint, so an <em>entire edge</em> of corners is optimal; you have flexibility in the product mix.</p></li>
+</ul>
+<p>The graphical method is perfect intuition but caps out at two variables. The Simplex algorithm generalizes the exact same idea — <em>walk the corners, improving each step</em> — to any dimension.</p>
+</section>
+<section id="simplex-walking-the-corners-in-any-dimension">
+<h2>2.2 Simplex — walking the corners in any dimension<a class="headerlink" href="#simplex-walking-the-corners-in-any-dimension" title="Link to this heading">#</a></h2>
+<p>To run Simplex we first put the LP in <strong>standard form</strong> by turning each “≤” inequality into an equality with a <strong>slack variable</strong> (the unused amount of that resource):</p>
+<div class="math notranslate nohighlight">
+\[
+4c+6d+2t \le 1850 \;\;\Longrightarrow\;\; 4c+6d+2t + s_1 = 1850,\quad s_1 \ge 0
+\]</div>
+<p>With slacks added, the variables split into <strong>basic</strong> (currently in the solution — the slacks, at the start) and <strong>nonbasic</strong> (set to zero — the real variables, at the start). That starting point is the origin: make nothing, use no resources. Simplex then <strong>pivots</strong> from corner to corner, each pivot swapping one variable in and one out, always improving the objective, until no improving move remains.</p>
+<div class="tip admonition">
+<p class="admonition-title">One pivot, by hand</p>
+<p>Lay the system out as a <strong>tableau</strong> (Dave’s convention: the <strong>objective function goes in the BOTTOM row</strong>).</p>
+<ol class="arabic simple">
+<li><p><strong>Entering variable</strong> — pick the column with the most-negative entry in the bottom (objective) row; that variable improves the objective fastest.</p></li>
+<li><p><strong>Departing variable</strong> — for that column, compute the ratio <span class="math notranslate nohighlight">\(b_i / a_i\)</span> for each positive <span class="math notranslate nohighlight">\(a_i\)</span> and pick the <strong>smallest</strong> (the <em>minimum ratio test</em>); that row leaves the basis.</p></li>
+<li><p><strong>Pivot</strong> — divide the pivot row to make the pivot element 1, then add/subtract multiples of it to zero out the rest of the pivot column.
+Repeat until <strong>no negative entries remain</strong> in the bottom row — that’s the optimum. It’s exactly the graphical method’s “walk to a better corner,” done with arithmetic instead of a picture, and it generalizes to 3-D, 10-D, or a thousand variables.</p></li>
+</ol>
+</div>
+<p>For a <strong>minimization</strong> problem we lean on a beautiful fact — <strong>duality</strong>. Every minimization LP (the <em>primal</em>) has a partner maximization LP (the <em>dual</em>); you transpose the problem’s coefficient matrix, solve the easier maximization with the same Simplex machinery, and <strong>read the minimization’s answer off the final tableau</strong>. This primal–dual relationship (due to von Neumann) isn’t just a trick — in Chapter 3 the dual values reappear as <strong>shadow prices</strong>, the economic value of each constraint.</p>
+</section>
+<section id="wrap-up">
+<h2>Wrap-up<a class="headerlink" href="#wrap-up" title="Link to this heading">#</a></h2>
+<div class="tip admonition">
+<p class="admonition-title">Key takeaways</p>
+<ul class="simple">
+<li><p>An <strong>LP</strong> has a linear objective and linear constraints — and a guarantee of an efficiently-findable optimum.</p></li>
+<li><p>The <strong>graphical method</strong>: shade infeasible sides → feasible region → the optimum is at a <strong>corner</strong>.</p></li>
+<li><p>Recognize <strong>redundant / infeasible / unbounded / alternate-optima</strong> cases on sight.</p></li>
+<li><p><strong>Simplex</strong> generalizes corner-walking via <strong>slack variables</strong>, a <strong>tableau</strong> (objective in the bottom row), and <strong>pivots</strong> (entering = most-negative bottom row; departing = minimum ratio test).</p></li>
+<li><p><strong>Duality</strong> solves minimization by transposing to a maximization — and seeds the <strong>shadow prices</strong> of Chapter 3.</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="lecture-key-points">
+<h2>📌 Lecture key points<a class="headerlink" href="#lecture-key-points" title="Link to this heading">#</a></h2>
+<p><em>Distilled takeaways from the video lectures behind this chapter — click each to expand.</em></p>
+<div class="note dropdown admonition">
+<p class="admonition-title">Linear Functions</p>
+<ul class="simple">
+<li><p>An LP has a <strong>linear</strong> objective and <strong>linear</strong> constraints (multiply by constants, then add).</p></li>
+<li><p>You <strong>cannot</strong> multiply variables, use logs/exp/abs/sqrt/fractions, or <code class="docutils literal notranslate"><span class="pre">if</span></code> conditions.</p></li>
+<li><p><strong>Linearity guarantees</strong> an efficiently-findable optimum (huge advantage).</p></li>
+<li><p>Nonlinear is more expressive but loses optimality guarantees.</p></li>
+<li><p>History: <strong>Dantzig</strong> (Simplex) and <strong>von Neumann</strong> (duality); <em>Good Will Hunting</em> legend.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Simple Bounds</p>
+<ul class="simple">
+<li><p><strong>Upper bounds</strong> for a maximization can be found by deliberately <strong>over-estimating</strong> the objective.</p></li>
+<li><p>Inflate the objective coefficients (must be <strong>≥</strong> the real ones) and relax the variable limits.</p></li>
+<li><p>A valid bound proves “we cannot make more than $X.”</p></li>
+<li><p>Tightening the bound (e.g., $10→$8 coefficients) narrows the gap to the true optimum.</p></li>
+<li><p>Bounds make a solution <em>provably</em> good.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Objective Function (Pyomo)</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Objective(expr=...,</span> <span class="pre">sense=maximize)</span></code> — a direct transcription of the math.</p></li>
+<li><p>Pyomo knows <code class="docutils literal notranslate"><span class="pre">model.c</span></code>, <code class="docutils literal notranslate"><span class="pre">model.t</span></code> etc. because the variables were declared.</p></li>
+<li><p>Set <strong><code class="docutils literal notranslate"><span class="pre">sense</span></code></strong> to maximize or minimize.</p></li>
+<li><p>Build a big expression separately (loops/ifs) then pass it in.</p></li>
+<li><p>Linear only: multiply by constants and add.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Constraints (Pyomo)</p>
+<ul class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">Constraint</span></code> needs an <strong>expression with a sign and a right-hand side</strong>.</p></li>
+<li><p><strong>Equality needs <code class="docutils literal notranslate"><span class="pre">==</span></code></strong> (double equals), or Python won’t understand it.</p></li>
+<li><p><strong>Name constraints meaningfully</strong> (<code class="docutils literal notranslate"><span class="pre">fabrication</span></code>, not <code class="docutils literal notranslate"><span class="pre">Constraint1</span></code>) — pays off in reports.</p></li>
+<li><p>Bounds can be set on variables or via constraints (don’t double up).</p></li>
+<li><p>Order (LHS vs RHS) is flexible; keep variables on the left for readability.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Simplex for 2D Maximization — Parts 1–3</p>
+<ul class="simple">
+<li><p>Put the LP in <strong>standard form</strong> with <strong>slack variables</strong> (unused resource).</p></li>
+<li><p><strong>Basic</strong> (in solution) vs <strong>nonbasic</strong> (set to 0); start at the origin.</p></li>
+<li><p><strong>Pivot:</strong> entering var = most-negative bottom row; departing = <strong>minimum ratio test</strong>.</p></li>
+<li><p>Keep pivoting until <strong>no negatives in the bottom row</strong> = optimum.</p></li>
+<li><p>It’s the graphical method’s “walk to a better corner,” generalized to any dimension.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Simplex for 3D Maximization (Soup to Nuts)</p>
+<ul class="simple">
+<li><p>Same logic with an extra variable x3.</p></li>
+<li><p><strong>Ties for the entering variable</strong> → pick at random.</p></li>
+<li><p>Read the optimal solution off the final tableau.</p></li>
+<li><p>Demonstrates Simplex scaling beyond 2-D.</p></li>
+<li><p>The algorithm is mechanical and dimension-agnostic.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Simplex for 2D Minimization — Parts 1–2</p>
+<ul class="simple">
+<li><p>Minimization solved via the <strong>dual</strong>: build an augmented matrix and solve as a <strong>maximization</strong>.</p></li>
+<li><p><strong>von Neumann duality</strong> — read the min answer off the max tableau.</p></li>
+<li><p>(Dave’s convention: objective function in the <strong>bottom row</strong>.)</p></li>
+<li><p>Same pivoting machinery.</p></li>
+<li><p>Dual values foreshadow <strong>shadow prices</strong> (Module 3).</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Simplex for 3D Minimization</p>
+<ul class="simple">
+<li><p>Minimize w with all “≥” constraints.</p></li>
+<li><p>Augmented matrix → <strong>transpose</strong> → solve the dual → read the final tableau.</p></li>
+<li><p>Generalizes the dual approach to 3-D.</p></li>
+<li><p>Reinforces primal–dual relationship.</p></li>
+<li><p>Completes the Simplex toolkit.</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./m2_lp_graphical_simplex"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../m1_foundations/index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Chapter 1 — Foundations of Optimization</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../m3_pyomo_sensitivity/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Chapter 3 — Linear Programming in Pyomo &amp; Sensitivity Analysis</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-graphical-method-2-d">2.1 The graphical method (2-D)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simplex-walking-the-corners-in-any-dimension">2.2 Simplex — walking the corners in any dimension</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrap-up">Wrap-up</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lecture-key-points">📌 Lecture key points</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr. Dave Wanik · University of Connecticut (OPIM 5641)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <p style="font-size:0.9em;opacity:0.85"><strong>⚠️ Work in progress.</strong> These are living draft materials — actively being written and revised. Expect rough edges, gaps, and changes; this is a teaching companion, not a final or official reference.</p>
+<p><em>OPIM 5641 — Business Decision Modeling. Built from Dr. Wanik's lecture transcripts and course notebooks.</em></p>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

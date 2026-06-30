@@ -1,0 +1,615 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Chapter 3 — Linear Programming in Pyomo &amp; Sensitivity Analysis &#8212; Business Decision Modeling — Optimization with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'm3_pyomo_sensitivity/index';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Chapter 4 — Nonlinear Optimization" href="../m4_nonlinear/index.html" />
+    <link rel="prev" title="Chapter 2 — Linear Programming: Graphical Method &amp; Simplex" href="../m2_lp_graphical_simplex/index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Business Decision Modeling — Optimization with Python</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Preface
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../m1_foundations/index.html">Chapter 1 — Foundations of Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m2_lp_graphical_simplex/index.html">Chapter 2 — Linear Programming: Graphical Method &amp; Simplex</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Chapter 3 — Linear Programming in Pyomo &amp; Sensitivity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m4_nonlinear/index.html">Chapter 4 — Nonlinear Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m5_networks/index.html">Chapter 5 — Network Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m6_integer/index.html">Chapter 6 — Integer Programming</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/drdave-teaching/opim5641-textbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/m3_pyomo_sensitivity/index.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Chapter 3 — Linear Programming in Pyomo & Sensitivity Analysis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-model-in-pyomo">3.1 Building a model in Pyomo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sensitivity-analysis-what-are-your-constraints-worth">3.2 Sensitivity analysis — what are your constraints worth?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrap-up">Wrap-up</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lecture-key-points">📌 Lecture key points</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="chapter-3-linear-programming-in-pyomo-sensitivity-analysis">
+<h1>Chapter 3 — Linear Programming in Pyomo &amp; Sensitivity Analysis<a class="headerlink" href="#chapter-3-linear-programming-in-pyomo-sensitivity-analysis" title="Link to this heading">#</a></h1>
+<div class="seealso dropdown admonition">
+<p class="admonition-title">🔗 Notebooks for this chapter</p>
+<p>Open in Colab and <strong>Runtime → Run all</strong> — data loads from a stable link, nothing to upload.</p>
+<ul class="simple">
+<li><p><strong>General Framework LP Pyomo answers</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/0_General_Framework_LP_Pyomo_answers.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/0_General_Framework_LP_Pyomo_answers.ipynb">GitHub</a></p></li>
+<li><p><strong>General Framework LP Pyomo blank</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/0_General_Framework_LP_Pyomo_blank.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/0_General_Framework_LP_Pyomo_blank.ipynb">GitHub</a></p></li>
+<li><p><strong>Allocation Models</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/1_Allocation_Models.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/1_Allocation_Models.ipynb">GitHub</a></p></li>
+<li><p><strong>Covering Models</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/2_CoveringModels.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/2_CoveringModels.ipynb">GitHub</a></p></li>
+<li><p><strong>Blending Models Coffee</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/3_BlendingModels_Coffee.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/3_BlendingModels_Coffee.ipynb">GitHub</a></p></li>
+<li><p><strong>Blending Models Furniture</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/4_BlendingModels_Furniture.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/4_BlendingModels_Furniture.ipynb">GitHub</a></p></li>
+<li><p><strong>Fertilizing Yard blank</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/FertilizingYard_blank.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module3/FertilizingYard_blank.ipynb">GitHub</a></p></li>
+</ul>
+</div>
+<p>Chapter 2 solved LPs by hand. Now we solve them in <strong>Pyomo</strong>, a Python modeling language that lets you write a model that <em>looks like the math</em>, hand it to an industrial solver, and get the answer in milliseconds. Then we do the part that separates an analyst from a button-pusher: <strong>sensitivity analysis</strong> — asking what the solution would do if the numbers changed, and what each constraint is actually <em>worth</em>.</p>
+<section id="building-a-model-in-pyomo">
+<h2>3.1 Building a model in Pyomo<a class="headerlink" href="#building-a-model-in-pyomo" title="Link to this heading">#</a></h2>
+<p>Every Pyomo model has the same four parts you learned in Chapter 1 — variables, objective, constraints, data — written in code. Here’s Veerman Furniture, end to end:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyomo.environ</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">ConcreteModel</span><span class="p">()</span>
+
+<span class="c1"># 1. decision variables (non-negative, continuous)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">c</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>   <span class="c1"># chairs</span>
+<span class="n">model</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>   <span class="c1"># desks</span>
+<span class="n">model</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>   <span class="c1"># tables</span>
+
+<span class="c1"># 2. objective — maximize profit</span>
+<span class="n">model</span><span class="o">.</span><span class="n">profit</span> <span class="o">=</span> <span class="n">Objective</span><span class="p">(</span><span class="n">expr</span> <span class="o">=</span> <span class="mi">15</span><span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">c</span> <span class="o">+</span> <span class="mi">24</span><span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">d</span> <span class="o">+</span> <span class="mi">18</span><span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">sense</span> <span class="o">=</span> <span class="n">maximize</span><span class="p">)</span>
+
+<span class="c1"># 3. constraints — the rules of reality</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fabrication</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">expr</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">c</span> <span class="o">+</span> <span class="mi">6</span><span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">d</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">t</span> <span class="o">&lt;=</span> <span class="mi">1850</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">assembly</span>    <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">expr</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">c</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">d</span> <span class="o">+</span> <span class="mi">7</span><span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">t</span> <span class="o">&lt;=</span> <span class="mi">2400</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">shipping</span>    <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">expr</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">c</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">d</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">t</span> <span class="o">&lt;=</span> <span class="mi">1500</span><span class="p">)</span>
+
+<span class="c1"># 4. solve</span>
+<span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;cbc&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">pprint</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Read it top to bottom and it’s just the math from Chapter 1, transcribed. <code class="docutils literal notranslate"><span class="pre">ConcreteModel()</span></code> makes the container; <code class="docutils literal notranslate"><span class="pre">Var(domain=NonNegativeReals)</span></code> declares a continuous, non-negative decision; <code class="docutils literal notranslate"><span class="pre">Objective(...,</span> <span class="pre">sense=maximize)</span></code> is what we optimize; each <code class="docutils literal notranslate"><span class="pre">Constraint(expr=...)</span></code> is a rule; <code class="docutils literal notranslate"><span class="pre">SolverFactory('cbc').solve(model)</span></code> calls the <strong>CBC</strong> solver. <strong>Name your constraints meaningfully</strong> (<code class="docutils literal notranslate"><span class="pre">fabrication</span></code>, not <code class="docutils literal notranslate"><span class="pre">Constraint1</span></code>) — it pays off enormously when you read the reports below.</p>
+<div class="tip admonition">
+<p class="admonition-title">The three classic LP shapes</p>
+<p>Almost every LP you’ll build is a flavor of three patterns:</p>
+<ul class="simple">
+<li><p><strong>Allocation</strong> — <em>maximize</em> an objective subject to <strong>“≤”</strong> resource limits (the furniture problem).</p></li>
+<li><p><strong>Covering</strong> — <em>minimize</em> cost subject to <strong>“≥”</strong> requirements (meet a minimum nutrition profile).</p></li>
+<li><p><strong>Blending</strong> — mix inputs to hit target proportions/scores, rewritten algebraically to stay linear.
+Spot which pattern a word problem is, and the formulation writes itself.</p></li>
+</ul>
+</div>
+</section>
+<section id="sensitivity-analysis-what-are-your-constraints-worth">
+<h2>3.2 Sensitivity analysis — what are your constraints worth?<a class="headerlink" href="#sensitivity-analysis-what-are-your-constraints-worth" title="Link to this heading">#</a></h2>
+<p>Solving the model gives you <em>a</em> plan. Sensitivity analysis tells you how <em>robust</em> that plan is and where the leverage lies. Two ideas carry the whole topic.</p>
+<div class="important admonition">
+<p class="admonition-title">Shadow price &amp; reduced cost</p>
+<p>A <strong>binding</strong> constraint is one your solution meets <em>exactly</em> (left-hand side = right-hand side) — you’ve used every last fabrication hour. Its <strong>shadow price</strong> is the improvement in the objective for <strong>one more unit</strong> of that constraint’s right-hand side:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{shadow price} = \frac{\partial(\text{optimal objective})}{\partial(\text{RHS of the constraint})}
+\]</div>
+<p>If fabrication’s shadow price is $4, then one more fabrication hour is worth $4 of profit (and one fewer costs $4). Non-binding constraints have <strong>slack</strong> and a shadow price of <strong>0</strong> — more of a resource you aren’t fully using is worthless. The <strong>reduced cost</strong> is the analogous quantity for a decision variable sitting at a bound: how the objective changes if you force that variable up or down.</p>
+</div>
+<p>The practical payoff: the shadow prices tell a manager <strong>exactly where to invest</strong>. If fabrication is the only binding constraint and it’s worth $4/hour, that’s the bottleneck — move people <em>to</em> fabrication from assembly and shipping (whose shadow prices are $0 because they have slack), and profit goes up.</p>
+<p>Each shadow price comes with an <strong>allowable range</strong> (an “activity range”) — the interval over which you can change that right-hand side and still use the shadow price to predict the new objective via:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{new objective} = \text{old objective} + (\Delta\text{RHS}) \times (\text{shadow price})
+\]</div>
+<p>Within the range you know how the <em>objective value</em> changes — but not exactly what the new <em>solution</em> looks like (add one fabrication hour and you’ll likely make one more desk, but you’d re-solve to be sure).</p>
+<p>You can pull all of this in Python. A quick look comes straight from the solved Pyomo model’s <strong>dual values</strong> (shadow prices) and variable info, and the full report — reduced costs, marginals, and allowable ranges for every variable and constraint — comes from solving with <strong>GLPK</strong> and reading its sensitivity report. Either way, the discipline is the same: solve, then <em>interrogate</em> the solution.</p>
+</section>
+<section id="wrap-up">
+<h2>Wrap-up<a class="headerlink" href="#wrap-up" title="Link to this heading">#</a></h2>
+<div class="tip admonition">
+<p class="admonition-title">Key takeaways</p>
+<ul class="simple">
+<li><p>A <strong>Pyomo</strong> model is the Chapter-1 math in code: <code class="docutils literal notranslate"><span class="pre">ConcreteModel</span></code> → <code class="docutils literal notranslate"><span class="pre">Var</span></code> → <code class="docutils literal notranslate"><span class="pre">Objective</span></code> → <code class="docutils literal notranslate"><span class="pre">Constraint</span></code> → <code class="docutils literal notranslate"><span class="pre">SolverFactory('cbc').solve</span></code>.</p></li>
+<li><p>Name constraints meaningfully; recognize <strong>allocation (≤ max), covering (≥ min), blending</strong> patterns.</p></li>
+<li><p>A <strong>binding</strong> constraint is met at equality; its <strong>shadow price</strong> is the value of one more unit of its right-hand side; non-binding constraints have <strong>slack</strong> and a shadow price of 0.</p></li>
+<li><p><strong>Reduced cost</strong> is the shadow-price analog for a variable at a bound.</p></li>
+<li><p>Use <strong>shadow prices to find the bottleneck</strong> and decide where to invest; the <strong>allowable range</strong> says how far the linear prediction holds.</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="lecture-key-points">
+<h2>📌 Lecture key points<a class="headerlink" href="#lecture-key-points" title="Link to this heading">#</a></h2>
+<p><em>Distilled takeaways from the video lectures behind this chapter — click each to expand.</em></p>
+<div class="note dropdown admonition">
+<p class="admonition-title">Introduction to Sensitivity Analysis</p>
+<ul class="simple">
+<li><p>Solving gives <em>a</em> plan; sensitivity asks <strong>what if the numbers change</strong>.</p></li>
+<li><p>A <strong>binding</strong> constraint is met at equality (LHS = RHS) — a bottleneck.</p></li>
+<li><p>Binding constraints have <strong>corners</strong> (Simplex/graphical link) — no coincidence.</p></li>
+<li><p>Concepts to master: reduced cost, <strong>shadow prices</strong>, allowable intervals, binding constraints.</p></li>
+<li><p>Tells the decision-maker <strong>where the leverage is</strong>.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Generating a Sensitivity Report</p>
+<ul class="simple">
+<li><p>Use <strong>GLPK</strong> to produce a full sensitivity report from the solved model.</p></li>
+<li><p>Report covers both <strong>variables</strong> and <strong>constraints</strong>.</p></li>
+<li><p>The “ugly” code is copy-paste; it yields the analysis you need.</p></li>
+<li><p>Report uses a <strong>dot (<code class="docutils literal notranslate"><span class="pre">.</span></code>)</strong> instead of 0 for zero activity.</p></li>
+<li><p>The report is the artifact you interrogate.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Variables and Reduced Cost</p>
+<ul class="simple">
+<li><p><strong>Reduced cost</strong> = impact on the optimum of changing a variable’s <strong>relevant bound</strong>.</p></li>
+<li><p>Nonzero only when a variable is <strong>at a bound</strong> (e.g., tables at upper, chairs at lower).</p></li>
+<li><p><strong>Positive</strong> for raising a max (tables), <strong>negative</strong> for forcing a min (chairs), <strong>0</strong> if interior (desks).</p></li>
+<li><p><strong>Objective-coefficient range</strong> = how far you can change a coefficient and keep the same solution.</p></li>
+<li><p>“Activity” column = each variable’s optimal value.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Constraints and Shadow Price</p>
+<ul class="simple">
+<li><p><strong>Shadow price</strong> = change in optimal objective per <strong>one more unit of the RHS</strong>.</p></li>
+<li><p>Nonzero only for <strong>binding</strong> constraints; non-binding have <strong>slack</strong> and shadow price 0.</p></li>
+<li><p>Example: fabrication binding → <strong>+1 hour = +$4, −1 hour = −$4</strong>.</p></li>
+<li><p>New objective = old + (ΔRHS)×(shadow price), valid within the <strong>activity range</strong>.</p></li>
+<li><p>Within the range you know the objective change, <strong>not</strong> exactly the new solution.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Sensitivity Analysis with Pyomo</p>
+<ul class="simple">
+<li><p>A few lines extract <strong>dual values</strong> (shadow prices) and <strong>slacks</strong> directly from Pyomo.</p></li>
+<li><p>Reduced costs via a dictionary keyed by the decision variable.</p></li>
+<li><p>Pyomo <strong>can’t</strong> give the full allowable intervals — use the GLPK report for those.</p></li>
+<li><p>Binding constraint = the <strong>bottleneck</strong>; move resources toward it to raise profit.</p></li>
+<li><p>Quick in-Python look vs the fuller GLPK report.</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./m3_pyomo_sensitivity"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../m2_lp_graphical_simplex/index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Chapter 2 — Linear Programming: Graphical Method &amp; Simplex</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../m4_nonlinear/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Chapter 4 — Nonlinear Optimization</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-model-in-pyomo">3.1 Building a model in Pyomo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sensitivity-analysis-what-are-your-constraints-worth">3.2 Sensitivity analysis — what are your constraints worth?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrap-up">Wrap-up</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lecture-key-points">📌 Lecture key points</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr. Dave Wanik · University of Connecticut (OPIM 5641)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <p style="font-size:0.9em;opacity:0.85"><strong>⚠️ Work in progress.</strong> These are living draft materials — actively being written and revised. Expect rough edges, gaps, and changes; this is a teaching companion, not a final or official reference.</p>
+<p><em>OPIM 5641 — Business Decision Modeling. Built from Dr. Wanik's lecture transcripts and course notebooks.</em></p>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

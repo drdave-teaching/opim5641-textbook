@@ -1,0 +1,650 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Chapter 5 — Network Optimization &#8212; Business Decision Modeling — Optimization with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'm5_networks/index';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Chapter 6 — Integer Programming" href="../m6_integer/index.html" />
+    <link rel="prev" title="Chapter 4 — Nonlinear Optimization" href="../m4_nonlinear/index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Business Decision Modeling — Optimization with Python</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Preface
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../m1_foundations/index.html">Chapter 1 — Foundations of Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m2_lp_graphical_simplex/index.html">Chapter 2 — Linear Programming: Graphical Method &amp; Simplex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m3_pyomo_sensitivity/index.html">Chapter 3 — Linear Programming in Pyomo &amp; Sensitivity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m4_nonlinear/index.html">Chapter 4 — Nonlinear Optimization</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Chapter 5 — Network Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m6_integer/index.html">Chapter 6 — Integer Programming</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/drdave-teaching/opim5641-textbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/m5_networks/index.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Chapter 5 — Network Optimization</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimum-cost-flow">5.1 Minimum-cost flow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assignment-problems">5.2 Assignment problems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shortest-path-transshipment-and-multiperiod">5.3 Shortest path, transshipment, and multiperiod</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrap-up">Wrap-up</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lecture-key-points">📌 Lecture key points</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="chapter-5-network-optimization">
+<h1>Chapter 5 — Network Optimization<a class="headerlink" href="#chapter-5-network-optimization" title="Link to this heading">#</a></h1>
+<div class="seealso dropdown admonition">
+<p class="admonition-title">🔗 Notebooks for this chapter</p>
+<p>Open in Colab and <strong>Runtime → Run all</strong> — data loads from a stable link, nothing to upload.</p>
+<ul class="simple">
+<li><p><strong>Network Bonner Electronics</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/0_Network_BonnerElectronics.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/0_Network_BonnerElectronics.ipynb">GitHub</a></p></li>
+<li><p><strong>Network Transshipment</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/0_Network_Transshipment.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/0_Network_Transshipment.ipynb">GitHub</a></p></li>
+<li><p><strong>TSP Pyomo</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/0_TSP_Pyomo.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/0_TSP_Pyomo.ipynb">GitHub</a></p></li>
+<li><p><strong>Network Transporting Coal</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/1_Network_TransportingCoal.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/1_Network_TransportingCoal.ipynb">GitHub</a></p></li>
+<li><p><strong>Paper Recycling Reduction Flow</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/1_PaperRecycling_ReductionFlow.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/1_PaperRecycling_ReductionFlow.ipynb">GitHub</a></p></li>
+<li><p><strong>TSP OR tools</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/1_TSP_OR_tools.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/1_TSP_OR_tools.ipynb">GitHub</a></p></li>
+<li><p><strong>Assignment Swim Team</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/2_Assignment_SwimTeam.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/2_Assignment_SwimTeam.ipynb">GitHub</a></p></li>
+<li><p><strong>Shortest Path Problem</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/2_Shortest_Path_Problem.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/2_Shortest_Path_Problem.ipynb">GitHub</a></p></li>
+<li><p><strong>Assignment Engineers</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/3_Assignment_Engineers.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/3_Assignment_Engineers.ipynb">GitHub</a></p></li>
+<li><p><strong>Matching Assignment Machine Scheduling</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/4_Matching_Assignment_MachineScheduling.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/4_Matching_Assignment_MachineScheduling.ipynb">GitHub</a></p></li>
+<li><p><strong>Assignment Alternative Model</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/5_Assignment_Alternative_Model.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/5_Assignment_Alternative_Model.ipynb">GitHub</a></p></li>
+<li><p><strong>Example Carpet</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/Example_Carpet.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Networks/Example_Carpet.ipynb">GitHub</a></p></li>
+</ul>
+</div>
+<p>A huge fraction of business problems are really <strong>networks</strong>: factories shipping to warehouses, people assigned to jobs, trucks routed through cities, inventory carried from one month to the next. Drawing the problem as <strong>nodes and arcs</strong> makes the structure obvious and the model almost write itself. This chapter covers the major network templates, all solved as linear (or integer) programs with CBC.</p>
+<section id="minimum-cost-flow">
+<h2>5.1 Minimum-cost flow<a class="headerlink" href="#minimum-cost-flow" title="Link to this heading">#</a></h2>
+<p>The workhorse is <strong>minimum-cost flow</strong>: ship product from <strong>supply</strong> nodes to <strong>demand</strong> nodes across <strong>arcs</strong> (one-way connections, each with a per-unit cost), at minimum total cost. Think Amazon moving inventory from factories to warehouses to meet demand on a FedEx/UPS cost table.</p>
+<p>The key modeling device is the node’s <strong>flow balance</strong>, captured by a value <span class="math notranslate nohighlight">\(b\)</span> at each node:</p>
+<div class="important admonition">
+<p class="admonition-title">The three node types and their <span class="math notranslate nohighlight">\(b\)</span> values</p>
+<ul class="simple">
+<li><p><strong>Supply node</strong> (a factory): contributes flow → <span class="math notranslate nohighlight">\(b &gt; 0\)</span> (its capacity).</p></li>
+<li><p><strong>Demand node</strong> (a warehouse): absorbs flow → <span class="math notranslate nohighlight">\(b &lt; 0\)</span> (the <strong>negative</strong> of its demand — the classic place students slip up).</p></li>
+<li><p><strong>Transshipment node</strong> (a depot in the middle): neither makes nor keeps anything → <span class="math notranslate nohighlight">\(b = 0\)</span>.</p></li>
+</ul>
+<p>Each arc has a <strong>lower bound (0)</strong>, an <strong>upper bound</strong> (capacity), and a <strong>cost</strong>. And you must be able to satisfy demand: assume <strong>total supply ≥ total demand</strong>, or the problem is infeasible without extra tricks.</p>
+</div>
+<p>The <strong>Bonner Electronics</strong> example ships from three plants (Minneapolis, Pittsburgh, Tucson) to four warehouses. Each plant’s outflow must respect its <strong>capacity</strong> (”≤”), and each warehouse’s inflow must <strong>meet demand</strong> (”≥”). In Pyomo this is a tidy pattern — store the costs/capacities in <strong>dictionaries</strong>, create one decision variable per arc, and build the balance constraints with a <code class="docutils literal notranslate"><span class="pre">ConstraintList</span></code> and a loop:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyomo.environ</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">ConcreteModel</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">arcs</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>         <span class="c1"># flow on each (plant, warehouse) arc</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">obj</span> <span class="o">=</span> <span class="n">Objective</span><span class="p">(</span>                               <span class="c1"># minimize total shipping cost</span>
+    <span class="n">expr</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">cost</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">*</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">arcs</span><span class="p">),</span> <span class="n">sense</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">)</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">cons</span> <span class="o">=</span> <span class="n">ConstraintList</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">plants</span><span class="p">:</span>                                     <span class="c1"># supply: outflow ≤ capacity</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">[(</span><span class="n">p</span><span class="p">,</span><span class="n">w</span><span class="p">)]</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">warehouses</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">capacity</span><span class="p">[</span><span class="n">p</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">warehouses</span><span class="p">:</span>                                 <span class="c1"># demand: inflow ≥ demand</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">cons</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">[(</span><span class="n">p</span><span class="p">,</span><span class="n">w</span><span class="p">)]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">plants</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">demand</span><span class="p">[</span><span class="n">w</span><span class="p">])</span>
+
+<span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;cbc&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When the per-unit <em>production</em> cost differs by plant (the coal/power-plant variant), you just add those terms to the objective — the structure is identical, the objective gets one more sum.</p>
+</section>
+<section id="assignment-problems">
+<h2>5.2 Assignment problems<a class="headerlink" href="#assignment-problems" title="Link to this heading">#</a></h2>
+<p>An <strong>assignment problem</strong> is a special network where <em>n</em> things map one-to-one to <em>n</em> jobs — four swimmers to four strokes, four machines to four print jobs — to minimize total time/cost. The decision variables are <strong>binary</strong> (person <em>i</em> does job <em>j</em>, or not), with two clean constraint families:</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_j x_{ij} = 1 \;\;\forall i \quad(\text{each person does exactly one job}),\qquad
+\sum_i x_{ij} = 1 \;\;\forall j \quad(\text{each job done by exactly one person})
+\]</div>
+<p>With four people you could eyeball it; with a hundred you can’t, and the model handles either identically. (The <strong>swim-team</strong> relay — assign each swimmer the stroke that minimizes total team time — is the friendly version of industrial <strong>machine scheduling</strong>.)</p>
+</section>
+<section id="shortest-path-transshipment-and-multiperiod">
+<h2>5.3 Shortest path, transshipment, and multiperiod<a class="headerlink" href="#shortest-path-transshipment-and-multiperiod" title="Link to this heading">#</a></h2>
+<p>The network template stretches naturally:</p>
+<ul class="simple">
+<li><p><strong>Shortest path</strong> — find the cheapest route from an origin to a destination. Model it as min-cost flow with the origin as <span class="math notranslate nohighlight">\(b=+1\)</span>, the destination <span class="math notranslate nohighlight">\(b=-1\)</span>, every other node a transshipment (<span class="math notranslate nohighlight">\(b=0\)</span>), and arc costs = distances. (Specialized algorithms like <strong>Dijkstra’s</strong> are faster for the vanilla problem, but the LP formulation wins when you need to bolt on extra constraints.)</p></li>
+<li><p><strong>Transshipment</strong> — intermediate depots between sources and sinks; just transshipment nodes (<span class="math notranslate nohighlight">\(b=0\)</span>) in the middle of the flow.</p></li>
+<li><p><strong>Multiperiod / inventory</strong> — let “time” be the network: each period is a node, <strong>production</strong> flows in, <strong>demand</strong> flows out, and <strong>inventory arcs</strong> carry leftover product to the next period. Modeling a schedule as a flow-through-time is a genuinely powerful idea.</p></li>
+</ul>
+<div class="tip admonition">
+<p class="admonition-title">Why bother formulating networks as LPs?</p>
+<p>Specialized algorithms solve pure network problems fast — but the <strong>LP/Pyomo formulation is flexible</strong>. The moment the real business adds a wrinkle (a minimum shipment if you use a lane at all, a forbidden route, a budget across arcs), the formulation absorbs it with one more constraint, while a hand-tuned algorithm would have to be rewritten.</p>
+</div>
+</section>
+<section id="wrap-up">
+<h2>Wrap-up<a class="headerlink" href="#wrap-up" title="Link to this heading">#</a></h2>
+<div class="tip admonition">
+<p class="admonition-title">Key takeaways</p>
+<ul class="simple">
+<li><p>Draw business problems as <strong>nodes and arcs</strong>; the structure makes the model obvious.</p></li>
+<li><p><strong>Min-cost flow</strong>: supply nodes (<span class="math notranslate nohighlight">\(b&gt;0\)</span>), demand nodes (<span class="math notranslate nohighlight">\(b&lt;0\)</span>, the <em>negative</em> of demand), transshipment (<span class="math notranslate nohighlight">\(b=0\)</span>); assume <strong>supply ≥ demand</strong>.</p></li>
+<li><p>The Pyomo pattern: arc dictionaries → one <code class="docutils literal notranslate"><span class="pre">Var</span></code> per arc → <code class="docutils literal notranslate"><span class="pre">ConstraintList</span></code> of supply (”≤”) and demand (”≥”) balances → CBC.</p></li>
+<li><p><strong>Assignment</strong> = binary one-to-one matching (each row sums to 1, each column sums to 1).</p></li>
+<li><p><strong>Shortest path, transshipment, and multiperiod inventory</strong> are all the same flow template with different <span class="math notranslate nohighlight">\(b\)</span> values — and the LP form flexes when the real world adds constraints.</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="lecture-key-points">
+<h2>📌 Lecture key points<a class="headerlink" href="#lecture-key-points" title="Link to this heading">#</a></h2>
+<p><em>Distilled takeaways from the video lectures behind this chapter — click each to expand.</em></p>
+<div class="note dropdown admonition">
+<p class="admonition-title">Introduction to Network Problems</p>
+<ul class="simple">
+<li><p>Networks = <strong>nodes and arcs</strong> with one-way flow; many supply-chain applications.</p></li>
+<li><p>Subtypes; this series starts with <strong>minimum-cost flow</strong> (min-cost shipping).</p></li>
+<li><p>Recall allocation (≤), covering (≥), blending models.</p></li>
+<li><p>Think in terms of <strong>supply nodes</strong> and <strong>demand nodes</strong>.</p></li>
+<li><p>Graphical intuition → the algebra of pairwise arcs.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Bonner Electronics — Min-Cost Flow — Parts 1–2</p>
+<ul class="simple">
+<li><p>Ship from 3 plants to 4 warehouses at <strong>minimum cost</strong>; CBC solver.</p></li>
+<li><p><strong>Supply constraints “≤”</strong> (capacity), <strong>demand constraints “≥”</strong> (meet demand).</p></li>
+<li><p>Assume <strong>supply ≥ demand</strong> (else a harder problem).</p></li>
+<li><p>Use <strong>dictionaries</strong> (key:value) + <strong>tuples</strong> for pairwise arcs; nested loops/list comprehension build the objective.</p></li>
+<li><p>Pyomo-Cookbook style: change values to solve any same-shape problem.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Description of Banana Inc.</p>
+<ul class="simple">
+<li><p>Factories → <strong>depots (transshipment)</strong> → warehouses min-cost flow.</p></li>
+<li><p>Node value <strong>b</strong>: <strong>+ for supply, 0 for transshipment, − (negative of demand) for demand</strong> — the classic trap.</p></li>
+<li><p>Each arc has lower bound 0, an upper-bound capacity, and a per-unit cost.</p></li>
+<li><p>Supply (5,500) &gt; demand (4,500) → production is the limiting factor.</p></li>
+<li><p>Maps the concepts (supply/demand/transshipment) onto a concrete graphic.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Lannon Project Revisited + Pyomo Model</p>
+<ul class="simple">
+<li><p>Plants → distributors with <strong>production + transportation</strong> costs (minimize total).</p></li>
+<li><p>New twist: if you ship from Atlanta at all, ship <strong>≥ 6,000</strong> (a <strong>multiple-range / fixed-charge</strong>).</p></li>
+<li><p>Model with <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">≥</span> <span class="pre">6000·y</span></code> and <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">≤</span> <span class="pre">18000·y</span></code> (y binary) — if y=0 then x=0.</p></li>
+<li><p>Build bounds with a <strong>function</strong> indexed by arcs (order must match).</p></li>
+<li><p>Flow balance: + for supply, − for demand; equality on demand (minimization won’t overship).</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Min-Cost Flow — Transporting Coal</p>
+<ul class="simple">
+<li><p>Objective includes <strong>production cost AND shipping cost</strong> (not just shipping).</p></li>
+<li><p>Production cost dwarfs shipping; can’t decide by hand → need a model.</p></li>
+<li><p>16 pairwise arcs (4 mines × 4 plants); naming <code class="docutils literal notranslate"><span class="pre">m11…m44</span></code>.</p></li>
+<li><p>Supply (”≤”) and demand (”≥”) constraints; CBC.</p></li>
+<li><p>Pyomo-Cookbook style with LaTeX-pretty formulas.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Solving Multiperiod Models</p>
+<ul class="simple">
+<li><p>Model <strong>time as a network</strong>: each month a node, production in, demand out.</p></li>
+<li><p><strong>Inventory arcs (I)</strong> carry leftover product to the next month.</p></li>
+<li><p>Fix demand by setting an arc’s lower = upper bound (so it’s constant).</p></li>
+<li><p>No inventory after the last month (production = total demand).</p></li>
+<li><p>All nodes become transshipment by this modeling trick.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Formulation of the Shortest Path Problem</p>
+<ul class="simple">
+<li><p>Shortest path as min-cost flow: origin <strong>b=+1</strong>, destination <strong>b=−1</strong>, others transshipment.</p></li>
+<li><p>Arc cost = distance (or time/money); lower 0, <strong>upper 1</strong> per arc.</p></li>
+<li><p>Exercise: convince yourself every arc’s upper bound is 1.</p></li>
+<li><p><strong>Dijkstra’s</strong> algorithm is faster for the vanilla problem…</p></li>
+<li><p>…but the <strong>LP formulation flexes</strong> when you add constraints.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Assignment Problems — Swim Team</p>
+<ul class="simple">
+<li><p>Assign <em>n</em> things to <em>n</em> jobs one-to-one (swimmers→strokes, machines→jobs).</p></li>
+<li><p><strong>Binary</strong> variables; each person does one job, each job done by one person (equalities).</p></li>
+<li><p>Rows vs columns of the time matrix = the two constraint families.</p></li>
+<li><p>Generalizes to <strong>machine scheduling</strong>.</p></li>
+<li><p>Compact Pyomo-Cookbook form vs longhand; same answer, different tinkerability.</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./m5_networks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../m4_nonlinear/index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Chapter 4 — Nonlinear Optimization</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../m6_integer/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Chapter 6 — Integer Programming</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimum-cost-flow">5.1 Minimum-cost flow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assignment-problems">5.2 Assignment problems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shortest-path-transshipment-and-multiperiod">5.3 Shortest path, transshipment, and multiperiod</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrap-up">Wrap-up</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lecture-key-points">📌 Lecture key points</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr. Dave Wanik · University of Connecticut (OPIM 5641)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <p style="font-size:0.9em;opacity:0.85"><strong>⚠️ Work in progress.</strong> These are living draft materials — actively being written and revised. Expect rough edges, gaps, and changes; this is a teaching companion, not a final or official reference.</p>
+<p><em>OPIM 5641 — Business Decision Modeling. Built from Dr. Wanik's lecture transcripts and course notebooks.</em></p>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

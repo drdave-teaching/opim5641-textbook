@@ -1,0 +1,615 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Chapter 1 — Foundations of Optimization &#8212; Business Decision Modeling — Optimization with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'm1_foundations/index';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Chapter 2 — Linear Programming: Graphical Method &amp; Simplex" href="../m2_lp_graphical_simplex/index.html" />
+    <link rel="prev" title="Preface" href="../intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Business Decision Modeling — Optimization with Python</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Preface
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Chapter 1 — Foundations of Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m2_lp_graphical_simplex/index.html">Chapter 2 — Linear Programming: Graphical Method &amp; Simplex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m3_pyomo_sensitivity/index.html">Chapter 3 — Linear Programming in Pyomo &amp; Sensitivity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m4_nonlinear/index.html">Chapter 4 — Nonlinear Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m5_networks/index.html">Chapter 5 — Network Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m6_integer/index.html">Chapter 6 — Integer Programming</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/drdave-teaching/opim5641-textbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/m1_foundations/index.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Chapter 1 — Foundations of Optimization</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#brute-force-search">1.1 Brute-force search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-simulation-deciding-under-uncertainty">1.2 Monte Carlo simulation — deciding under uncertainty</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrap-up">Wrap-up</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lecture-key-points">📌 Lecture key points</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="chapter-1-foundations-of-optimization">
+<h1>Chapter 1 — Foundations of Optimization<a class="headerlink" href="#chapter-1-foundations-of-optimization" title="Link to this heading">#</a></h1>
+<div class="seealso dropdown admonition">
+<p class="admonition-title">🔗 Notebooks for this chapter</p>
+<p>Open in Colab and <strong>Runtime → Run all</strong> — data loads from a stable link, nothing to upload.</p>
+<ul class="simple">
+<li><p><strong>Practical Python Programming Basics</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/1_Practical_Python%20Programming%20Basics.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/1_Practical_Python%20Programming%20Basics.ipynb">GitHub</a></p></li>
+<li><p><strong>Data Types Tables Wrangling and Statistics</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/2_DataTypes_Tables_Wrangling%20and%20Statistics.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/2_DataTypes_Tables_Wrangling%20and%20Statistics.ipynb">GitHub</a></p></li>
+<li><p><strong>A quick refresh on MC simulation</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/A%20quick%20refresh%20on%20MC%20simulation.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/A%20quick%20refresh%20on%20MC%20simulation.ipynb">GitHub</a></p></li>
+<li><p><strong>An Introduction to Distributions</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/An%20Introduction%20to%20Distributions.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/An%20Introduction%20to%20Distributions.ipynb">GitHub</a></p></li>
+<li><p><strong>Big Ideas for MC Simulation</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/Big%20Ideas%20for%20MC%20Simulation.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/Big%20Ideas%20for%20MC%20Simulation.ipynb">GitHub</a></p></li>
+<li><p><strong>Brute Force Wyndor Glass</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/BruteForce_Wyndor%20Glass.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/BruteForce_Wyndor%20Glass.ipynb">GitHub</a></p></li>
+<li><p><strong>Brute Force Wyndor Glass blank</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/BruteForce_Wyndor%20Glass_blank.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/BruteForce_Wyndor%20Glass_blank.ipynb">GitHub</a></p></li>
+<li><p><strong>Cell Phones CC Answers</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/CellPhones_CC_Answers.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/CellPhones_CC_Answers.ipynb">GitHub</a></p></li>
+<li><p><strong>Cell Phones CC blank</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/CellPhones_CC_blank.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/CellPhones_CC_blank.ipynb">GitHub</a></p></li>
+<li><p><strong>Health Claims CC</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/HealthClaims_CC.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/HealthClaims_CC.ipynb">GitHub</a></p></li>
+<li><p><strong>Introduction to Optimization DW</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/Introduction%20to%20Optimization_DW.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/Introduction%20to%20Optimization_DW.ipynb">GitHub</a></p></li>
+<li><p><strong>Introduction to Optimization DW blank</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/Introduction%20to%20Optimization_DW_blank.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/Introduction%20to%20Optimization_DW_blank.ipynb">GitHub</a></p></li>
+<li><p><strong>Markdown Guide</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/Markdown_Guide.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/Markdown_Guide.ipynb">GitHub</a></p></li>
+<li><p><strong>Momentum Trading CC</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/MomentumTrading_CC.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/MomentumTrading_CC.ipynb">GitHub</a></p></li>
+<li><p><strong>Monte Carlo Simulation and Brute Force</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/Monte%20Carlo%20Simulation%20and%20Brute%20Force.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/Monte%20Carlo%20Simulation%20and%20Brute%20Force.ipynb">GitHub</a></p></li>
+<li><p><strong>Monte Carlo Simulation Non Parametric</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/MonteCarloSimulation_NonParametric.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/MonteCarloSimulation_NonParametric.ipynb">GitHub</a></p></li>
+<li><p><strong>Moving Averages and Evaluating a Model</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/Moving%20Averages%20and%20Evaluating%20a%20Model.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/Moving%20Averages%20and%20Evaluating%20a%20Model.ipynb">GitHub</a></p></li>
+<li><p><strong>S26 Midterm Review Wanik</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/S26_MidtermReview_Wanik.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/S26_MidtermReview_Wanik.ipynb">GitHub</a></p></li>
+<li><p><strong>The Brute Force Method</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/The%20Brute%20Force%20Method.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/The%20Brute%20Force%20Method.ipynb">GitHub</a></p></li>
+<li><p><strong>Week2 Live F25 OPIM5641</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/Week2_Live_F25_OPIM5641.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Module1/Week2_Live_F25_OPIM5641.ipynb">GitHub</a></p></li>
+</ul>
+</div>
+<p>Every optimization problem in this book — no matter how fancy — is built from the <strong>same four pieces</strong>. Learn to spot them in a word problem and you can model almost anything.</p>
+<div class="important admonition">
+<p class="admonition-title">The four building blocks</p>
+<ol class="arabic simple">
+<li><p><strong>Decision variables</strong> — the things you control (how many chairs to build, where to put a warehouse).</p></li>
+<li><p><strong>The objective function</strong> — the single quantity you want to <strong>maximize</strong> (profit) or <strong>minimize</strong> (cost). You optimize <em>one</em> thing.</p></li>
+<li><p><strong>Constraints</strong> — the rules of reality (only 1,850 fabrication hours; demand ≤ 100 tables).</p></li>
+<li><p><strong>Parameters / data</strong> — the numbers you’re given (profit per item, hours per unit).</p></li>
+</ol>
+</div>
+<p>Our running example is the <strong>Veerman Furniture</strong> company: decide how many <strong>chairs, desks, and tables</strong> to build to maximize profit, subject to limited fabrication, assembly, and shipping hours. In math:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\max_{c,d,t}\; 15c + 24d + 18t \quad\text{s.t.}\quad
+\begin{cases}
+4c + 6d + 2t \le 1850 &amp; \text{(fabrication)}\\
+3c + 5d + 7t \le 2400 &amp; \text{(assembly)}\\
+3c + 2d + 4t \le 1500 &amp; \text{(shipping)}\\
+c,d,t \ge 0
+\end{cases}
+\end{split}\]</div>
+<p>That’s the whole game: an objective, some constraints, and variables you’re solving for. The rest of the book is about <em>recognizing</em> this structure in business problems and solving ever-richer versions of it.</p>
+<div class="tip admonition">
+<p class="admonition-title">Two quotes to model by</p>
+<p><strong>H. L. Mencken:</strong> <em>“For every complex problem there is an answer that is clear, simple, and wrong.”</em> Don’t oversimplify reality away. And <strong>George Box:</strong> <em>“All models are wrong, but some are useful.”</em> Don’t over-engineer it either. A model is a deliberate, useful simplification — your job is to make it useful, not perfect.</p>
+</div>
+<section id="brute-force-search">
+<h2>1.1 Brute-force search<a class="headerlink" href="#brute-force-search" title="Link to this heading">#</a></h2>
+<p>Before any clever algorithm, there’s the most honest method of all: <strong>try every combination and keep the best.</strong> If chairs, desks, and tables each range over some possibilities, loop over all of them, check feasibility, and track the best objective:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">best_profit</span><span class="p">,</span> <span class="n">best_plan</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">),</span> <span class="kc">None</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">361</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">301</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">101</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">c</span><span class="o">+</span><span class="mi">6</span><span class="o">*</span><span class="n">d</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">t</span> <span class="o">&lt;=</span> <span class="mi">1850</span> <span class="ow">and</span> <span class="mi">3</span><span class="o">*</span><span class="n">c</span><span class="o">+</span><span class="mi">5</span><span class="o">*</span><span class="n">d</span><span class="o">+</span><span class="mi">7</span><span class="o">*</span><span class="n">t</span> <span class="o">&lt;=</span> <span class="mi">2400</span> <span class="ow">and</span> <span class="mi">3</span><span class="o">*</span><span class="n">c</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">d</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">t</span> <span class="o">&lt;=</span> <span class="mi">1500</span><span class="p">):</span>
+                <span class="n">profit</span> <span class="o">=</span> <span class="mi">15</span><span class="o">*</span><span class="n">c</span> <span class="o">+</span> <span class="mi">24</span><span class="o">*</span><span class="n">d</span> <span class="o">+</span> <span class="mi">18</span><span class="o">*</span><span class="n">t</span>
+                <span class="k">if</span> <span class="n">profit</span> <span class="o">&gt;</span> <span class="n">best_profit</span><span class="p">:</span>
+                    <span class="n">best_profit</span><span class="p">,</span> <span class="n">best_plan</span> <span class="o">=</span> <span class="n">profit</span><span class="p">,</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">best_plan</span><span class="p">,</span> <span class="n">best_profit</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Brute force is <strong>guaranteed correct</strong> and easy to reason about — and <strong>catastrophically inefficient</strong>. Three variables with a few hundred values each is already millions of combinations; add variables and the count explodes combinatorially. That inefficiency is exactly the motivation for everything that follows: linear programming and the Simplex algorithm find the optimum without enumerating the universe.</p>
+</section>
+<section id="monte-carlo-simulation-deciding-under-uncertainty">
+<h2>1.2 Monte Carlo simulation — deciding under uncertainty<a class="headerlink" href="#monte-carlo-simulation-deciding-under-uncertainty" title="Link to this heading">#</a></h2>
+<p>Real decisions involve <strong>uncertainty</strong>: a stock return, the number of insurance claims, how long a part lasts. <strong>Monte Carlo simulation</strong> handles this by <em>sampling</em> the randomness many times and looking at the <strong>distribution</strong> of outcomes rather than a single point estimate.</p>
+<p>The recipe is a three-step escalation:</p>
+<ol class="arabic simple">
+<li><p><strong>One run.</strong> Simulate a single trajectory — e.g., a 35-year retirement nest egg where each year’s stock growth is <code class="docutils literal notranslate"><span class="pre">np.random.normal(0.07,</span> <span class="pre">0.20)</span></code> — accumulating year by year.</p></li>
+<li><p><strong>Repeat 10,000 times.</strong> Wrap it in a loop, keep the <strong>ending value</strong> of each run, and plot a <strong>histogram</strong> of outcomes with mean and 25th/75th-percentile lines.</p></li>
+<li><p><strong>“Spaghetti.”</strong> Keep <em>every</em> year of <em>every</em> run and plot all 10,000 trajectories at once to see the cone of possibilities widen over time.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">endings</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">sim</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>
+    <span class="n">money</span> <span class="o">=</span> <span class="mf">10000.0</span>
+    <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">35</span><span class="p">):</span>
+        <span class="n">money</span> <span class="o">*=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.07</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">))</span>   <span class="c1"># uncertain annual growth</span>
+    <span class="n">endings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">money</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">endings</span><span class="p">,</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">75</span><span class="p">])</span>   <span class="c1"># report a range, not a single number</span>
+</pre></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Why simulate instead of just averaging?</p>
+<p>Plugging in the <em>average</em> return gives you one number and a false sense of certainty. Simulation gives you the <strong>whole distribution</strong> — so you can say “there’s a 25% chance of ending below $X” — which is exactly the kind of risk statement a decision-maker needs. The same machinery powers the insurance, inventory, and reliability examples later in the course.</p>
+</div>
+</section>
+<section id="wrap-up">
+<h2>Wrap-up<a class="headerlink" href="#wrap-up" title="Link to this heading">#</a></h2>
+<div class="tip admonition">
+<p class="admonition-title">Key takeaways</p>
+<ul class="simple">
+<li><p>Every model has <strong>decision variables, an objective, constraints, and data</strong> — find them first.</p></li>
+<li><p>You optimize <strong>one</strong> objective (max profit <em>or</em> min cost), subject to constraints.</p></li>
+<li><p><strong>Brute force</strong> always works and never scales — the reason we need real optimization algorithms.</p></li>
+<li><p><strong>Monte Carlo</strong> turns uncertainty into a distribution of outcomes; report a <em>range</em>, not a point.</p></li>
+<li><p>Keep Mencken and Box on your shoulder: a model should be <strong>useful</strong>, neither naïvely simple nor needlessly complex.</p></li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="lecture-key-points">
+<h2>📌 Lecture key points<a class="headerlink" href="#lecture-key-points" title="Link to this heading">#</a></h2>
+<p><em>Distilled takeaways from the video lectures behind this chapter — click each to expand.</em></p>
+<div class="note dropdown admonition">
+<p class="admonition-title">Brief Introduction to Optimization</p>
+<ul class="simple">
+<li><p>Optimization = make the <strong>best decision</strong> subject to real-world <strong>constraints</strong>.</p></li>
+<li><p>A simple universal strategy (“solve” almost anything) sets up the course.</p></li>
+<li><p>Introduces the mindset: translate a business problem into a model.</p></li>
+<li><p>Optimization is everywhere in operations and business.</p></li>
+<li><p>Foundation for every later technique.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Building Blocks of a Model</p>
+<ul class="simple">
+<li><p>Every model has <strong>four parts</strong>: decision variables, objective, constraints, parameters/data.</p></li>
+<li><p>You optimize <strong>one</strong> objective — maximize profit <em>or</em> minimize cost, not both.</p></li>
+<li><p>These four building blocks “appear in virtually every problem in the class.”</p></li>
+<li><p>Running example: <strong>Veerman Furniture</strong> (chairs/desks/tables).</p></li>
+<li><p>Spotting the four parts in a word problem is the core modeling skill.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Brute-force Search</p>
+<ul class="simple">
+<li><p><strong>Try every combination, keep the best</strong> — guaranteed correct.</p></li>
+<li><p>It is <strong>catastrophically inefficient</strong> (combinatorial explosion).</p></li>
+<li><p>Generic framework: loop over options, check feasibility, track the best objective.</p></li>
+<li><p>Motivates why we need real algorithms (LP/Simplex).</p></li>
+<li><p>(Mencken: “for every complex problem there is an answer that is clear, simple, and wrong.”)</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./m1_foundations"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Preface</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../m2_lp_graphical_simplex/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Chapter 2 — Linear Programming: Graphical Method &amp; Simplex</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#brute-force-search">1.1 Brute-force search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-simulation-deciding-under-uncertainty">1.2 Monte Carlo simulation — deciding under uncertainty</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrap-up">Wrap-up</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lecture-key-points">📌 Lecture key points</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr. Dave Wanik · University of Connecticut (OPIM 5641)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <p style="font-size:0.9em;opacity:0.85"><strong>⚠️ Work in progress.</strong> These are living draft materials — actively being written and revised. Expect rough edges, gaps, and changes; this is a teaching companion, not a final or official reference.</p>
+<p><em>OPIM 5641 — Business Decision Modeling. Built from Dr. Wanik's lecture transcripts and course notebooks.</em></p>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
