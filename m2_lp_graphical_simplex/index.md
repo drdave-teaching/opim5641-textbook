@@ -101,7 +101,7 @@ For a **minimization** problem we lean on a beautiful fact — **duality**. Ever
 - **Upper bounds** for a maximization can be found by deliberately **over-estimating** the objective.
 - Inflate the objective coefficients (must be **≥** the real ones) and relax the variable limits.
 - A valid bound proves "we cannot make more than \$X."
-- Tightening the bound (e.g., $10→$8 coefficients) narrows the gap to the true optimum.
+- Tightening the bound (e.g., \$10→\$8 coefficients) narrows the gap to the true optimum.
 - Bounds make a solution *provably* good.
 :::
 
