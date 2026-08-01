@@ -1,9 +1,17 @@
 format: jb-book
 root: intro
 chapters:
+  - file: module1_hub/index
+    sections:
+      - file: module1_hub/working_in_course
+      - file: module1_hub/videos
+      - file: module1_hub/skills
+      - file: module1_hub/talking_points
+      - file: module1_hub/studio1
   - file: m1_foundations/index
   - file: m2_lp_graphical_simplex/index
   - file: m3_pyomo_sensitivity/index
   - file: m4_nonlinear/index
   - file: m5_networks/index
   - file: m6_integer/index
+  - file: appendix_how_this_book_was_made
