@@ -8,6 +8,11 @@ chapters:
       - file: module1_hub/skills
       - file: module1_hub/talking_points
       - file: module1_hub/studio1
+  - file: module2_hub/index
+    sections:
+      - file: module2_hub/videos
+      - file: module2_hub/skills
+      - file: module2_hub/talking_points
   - file: m1_foundations/index
   - file: m2_lp_graphical_simplex/index
   - file: m3_pyomo_sensitivity/index
