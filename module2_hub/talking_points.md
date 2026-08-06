@@ -1,4 +1,4 @@
-# Module 2 Talking Points — The Theory You Should Be Able to Explain
+# Module 2 Talking Points — Brute Force & the Graphical Method
 
 **OPIM 5641 - Business Decision Modeling · Dr. Dave Wanik · University of Connecticut**
 
@@ -74,8 +74,44 @@ Every optimization model, however fancy, is four pieces:
 
 **The division of labor, in one line:** optimization hands you the plan; Monte Carlo tells you how much to trust it. Neither is complete alone, and that's the arc of the whole course.
 
+## 7 · The graphical method - the first smart method
+
+**Every constraint is the equation of a line.** Strike the inequality off $3T + 4C \le 2400$ and you have $3T + 4C = 2400$ - grade-school algebra. That's the whole leap: an optimization problem is a *picture* you can draw in two dimensions.
+
+**How you plot one.** Set one variable to zero and solve for the other; then swap. For carpentry: when $T=0$, $C=600$; when $C=0$, $T=800$. Two points make a line. And a constraint with only one variable in it (like $C \le 450$ or $T \ge 100$) is just a flat horizontal or vertical line.
+
+**Which side do you shade?** Don't guess - **use a test point.** Plug in something easy like $(1,1)$ and ask whether the inequality holds. If it does, that side is allowed and you shade the other. It works every time and it's what you'll do on paper under exam pressure.
+
+**The feasible region is the leftover white space** - the only place where every constraint is satisfied at once. Every point in it is a plan you could actually run.
+
+**The corner point property is the whole trick.** The optimum always sits at a **corner** of the feasible region, because anything strictly inside is a linear combination of the corners - some suboptimal blend. So you never check the infinite interior; you check a handful of extreme points. That's how millions of brute-force combinations collapse into **five**.
+
+**Finding the corners:** the ones on an axis you read straight off the graph - typically three of five come free. For the rest you do algebra: scale one equation so a variable matches, **subtract to cancel it**, solve for what's left, then **back-substitute**. Multiplying an equation of a line by a constant doesn't move the line - same slope, just scaled - which is why that manoeuvre is legal.
+
+**Then plug and chug.** Every corner goes into the objective function, and the best value wins.
+
+**A property worth noticing** (and it pays off later in Simplex): as you walk around the feasible region, the objective climbs, climbs, climbs - and then falls off. It isn't random. Simplex exploits exactly that.
+
+**Minimization works identically.** The corner point property doesn't care which direction you're going. Only the "which corner wins" step flips.
+
+**Two edge cases you should recognize on sight:**
+- **Redundant constraints** - a line that isn't doing any work. It sits outside the feasible region and shapes nothing. Harmless, but worth spotting: it means a rule you were worried about isn't binding.
+- **Infeasible setups** - constraints that *fight each other*, leaving no feasible region at all. This is the single most common error you'll hit later in this course, and the fix is never "run it again" - it's going back and finding which two rules can't both be true.
+
+**And the limitation that drives the rest of the course:** the graphical method only works with **two decision variables**. Three needs a 3-D plot; four has nothing to draw. So we need an **algebraic extension of this geometric technique** - which is precisely what **Simplex** is.
+
+## 8 · Optimal is not the same as sensible
+
+The furniture optimizer says build **zero chairs**. Mathematically perfect - and possibly terrible, because customers walk into a furniture store expecting chairs.
+
+The trail-mix optimizer fills the bag with **coconut flakes and about two raisins**. It satisfies every nutritional constraint you wrote down, at the lowest possible cost. It is also not trail mix.
+
+**The lesson:** the model optimizes exactly what you told it to optimize, using exactly the constraints you gave it. When the answer looks absurd, that's not the math failing - it's the model telling you that your constraints were incomplete. Your judgment doesn't leave the room just because you found the optimum.
+
 ---
 
 ## The bridge to what's next
 
-Brute force works and brute force dies. The next method is the first *smart* one: for two-variable problems, the **graphical method** stops enumerating and draws a picture - the feasible region - and reads the optimum off the corner points. Then **Simplex** takes that same insight and scales it past two dimensions. Wyndor Glass is our Rosetta Stone: the same problem, solved three ways, so you can watch the ideas line up.
+Brute force works, and brute force dies. The graphical method rescued us by drawing a picture instead of enumerating - millions of combinations down to five corner points - but it can only ever handle two decision variables.
+
+So the next stop is **Simplex**: the algebraic extension of the graphical method, walking those same corners in any number of dimensions, long after we can't draw the picture. And **Wyndor Glass** is our Rosetta Stone - you've now solved it with brute force *and* graphically, and you'll solve it a third time with Simplex, so you can watch the same answer (\$36,000 at 2 doors and 6 windows) fall out of three completely different machines.

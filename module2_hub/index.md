@@ -2,7 +2,7 @@
 
 :::{admonition} ⚠️ Work in progress
 :class: warning
-This book is under active development for Fall 2026 — the brute-force half of Module 2 is complete; the graphical half is being built.
+This book is under active development for Fall 2026 — Module 2 is complete - brute force and the graphical method are both recorded.
 :::
 
 Module 1 gave you two verbs: when you have data you **explore** it, when you don't you **simulate** it. Module 2 adds the third:

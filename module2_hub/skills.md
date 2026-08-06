@@ -1,4 +1,4 @@
-# Module 2 Skills Sheet — Brute Force
+# Module 2 Skills Sheet — Brute Force & the Graphical Method
 
 **OPIM 5641 - Business Decision Modeling · Dr. Dave Wanik · University of Connecticut**
 
@@ -59,10 +59,33 @@ After the brute-force videos and notebooks, these are the skills you own. Module
 - ☐ Estimate the probability your plan is infeasible by counting simulations, and identify **which** constraint is the fragile one
 - ☐ State the division of labor out loud: optimization hands you the plan; Monte Carlo tells you how much to trust it
 
+## 📐 The graphical method
+*Notebooks: `4_Graphical/a_GraphicalMethod_Maximize.ipynb` · `b_GraphicalMethod_Minimize.ipynb` · `g_GraphicalMethod_Wyndor.ipynb`*
+
+- ☐ Turn a word problem into a mathematical model, then recognize that each constraint with the inequality removed is just **the equation of a line**
+- ☐ Plot a constraint by setting one variable to zero at a time to get two points, then drawing the line between them (e.g. $3T + 4C = 2400$ → $(0, 600)$ and $(800, 0)$)
+- ☐ Recognize that a constraint with only ONE variable is a plain vertical or horizontal line
+- ☐ Decide which side of the line to shade using a **test point** - (1,1) is the easy one - instead of guessing
+- ☐ Identify the **feasible region** as the unshaded area where every constraint holds at once
+- ☐ State the **corner point property**: the optimum always sits at a corner, because anything inside the region is a suboptimal linear combination
+- ☐ Read the easy corner points straight off the axes (typically 3 of 5 come free)
+- ☐ Solve the hard corners **algebraically** - scale one equation, subtract to cancel a variable, solve, then back-substitute
+- ☐ Plug every corner into the objective and pick the winner - **plug and chug**
+- ☐ Do the whole thing **by hand on paper**, with a ruler and labeled constraints, not just in Python
+- ☐ Handle a **minimization** problem the same way, and know the corner point property holds either direction
+- ☐ Spot the edge cases: **redundant** constraints (a line that isn't shaping the feasible region) and **infeasible** setups (constraints fighting each other so no feasible region exists)
+- ☐ Explain why the graphical method dies past **two decision variables** - and what you'd reach for instead
+
+## 🧠 Judgment: optimal is not the same as sensible
+*Notebooks: the minimize + Veerman examples*
+
+- ☐ Explain why an "optimal" answer can still be a bad business decision (zero chairs in a furniture store; a trail mix that's coconut flakes and two raisins)
+- ☐ Say what that means for your job: the model optimizes what you *told* it to; your judgment stays in the room
+
 ---
 
 ## The one-sentence version
 
 > **You can take a business problem written in English, pull out the decisions, the goal, and the rules, and have a computer grind through every possible plan to find the provably best one - and you know exactly when that approach will fall on its face.**
 
-Next stop: the first method that's actually *smart* about it.
+Next stop: **Simplex** - the algebraic extension of the graphical method, which walks these same corners in any number of dimensions.

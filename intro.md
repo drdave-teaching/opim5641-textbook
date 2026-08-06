@@ -32,3 +32,13 @@ Read with a notebook open and **Pyomo + a solver installed** (CBC for linear/int
 Let's go model some decisions.
 
 — *Dave*
+
+:::{admonition} 🎬 Start here — Welcome from Dr. Dave
+:class: tip
+Before anything else, watch the **course welcome video** (on HuskyCT, ~3 minutes). It covers who I am,
+how this class went from an Excel course to a full Python course, and the arc of the whole semester:
+level set → Monte Carlo → brute force → graphical → Simplex → nonlinear → portfolio → integer programming
+→ the final project.
+
+Then read [Working in this Course](module1_hub/working_in_course.md) so you know how to run and **save** your work.
+:::
