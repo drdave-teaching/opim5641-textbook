@@ -82,10 +82,26 @@ After the brute-force videos and notebooks, these are the skills you own. Module
 - ☐ Explain why an "optimal" answer can still be a bad business decision (zero chairs in a furniture store; a trail mix that's coconut flakes and two raisins)
 - ☐ Say what that means for your job: the model optimizes what you *told* it to; your judgment stays in the room
 
+## 🪜 Simplex — the algebraic extension
+*Notebooks: `5_Simplex/0_BigIdeas_Simplex_vs_Graphical.ipynb` · `1_General Simplex Maximization Steps.ipynb` · `Wyndor_Glass_Simplex_Method.ipynb`*
+
+- ☐ Say in one sentence why Simplex exists: the graphical method dies past two variables; Simplex walks the **same corners algebraically**, in any number of dimensions
+- ☐ Define **adjacency**: two corner points are adjacent if they share a constraint boundary
+- ☐ State the **optimality test**: if no adjacent corner point improves $Z$, the current corner is optimal
+- ☐ Convert a problem to **augmented form**: every inequality becomes an equation with a **slack variable** ($x_3, x_4, x_5$ or $s_1, s_2, s_3$ — your choice)
+- ☐ Classify variables as **basic** (nonzero, appears once with coefficient 1) vs. **nonbasic** (zero) — and know the number of basic variables equals the number of constraints
+- ☐ Read off the initial basic feasible solution at the origin (Wyndor: $(0, 0, 4, 12, 18)$) — and explain why we initialize at "make nothing"
+- ☐ Build the initial **tableau**: one row per constraint plus the objective in the **bottom row** (rearranged so a constant sits on the RHS — that's where the negative signs come from)
+- ☐ Pick the **entering** variable: the biggest negative number in the bottom row
+- ☐ Pick the **departing** variable with the **minimum ratio test**: RHS ÷ entering-column coefficient, smallest ratio wins
+- ☐ Execute **Gauss-Jordan**: divide the pivot row, add/subtract multiples of it to zero out the entering column everywhere else — updating **every** value across each row
+- ☐ Know when to stop: no negatives left in the bottom row
+- ☐ Do Wyndor end-to-end **by hand on paper**, tableau by tableau, and get \$36,000 at (2, 6) — the same answer brute force and the picture gave you
+
 ---
 
 ## The one-sentence version
 
-> **You can take a business problem written in English, pull out the decisions, the goal, and the rules, and have a computer grind through every possible plan to find the provably best one - and you know exactly when that approach will fall on its face.**
+> **You can take a business problem written in English, pull out the decisions, the goal, and the rules — and solve it three different ways: grind through every plan (brute force), draw the picture (graphical), or walk the corners algebraically (Simplex) — and you know exactly when each method shines and when it falls on its face.**
 
-Next stop: **Simplex** - the algebraic extension of the graphical method, which walks these same corners in any number of dimensions.
+Next stop: **Module 3** — hand the whole thing to a solver. Pyomo formalizes the data/model split you've been practicing, and because you did it the hard way first, the solver is a tool you understand rather than a magic spell.

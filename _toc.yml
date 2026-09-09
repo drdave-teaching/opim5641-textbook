@@ -1,22 +1,44 @@
 format: jb-book
 root: intro
-chapters:
-  - file: module1_hub/index
-    sections:
-      - file: module1_hub/working_in_course
-      - file: module1_hub/videos
-      - file: module1_hub/skills
-      - file: module1_hub/talking_points
-      - file: module1_hub/studio1
-  - file: module2_hub/index
-    sections:
-      - file: module2_hub/videos
-      - file: module2_hub/skills
-      - file: module2_hub/talking_points
-  - file: m1_foundations/index
-  - file: m2_lp_graphical_simplex/index
-  - file: m3_pyomo_sensitivity/index
-  - file: m4_nonlinear/index
-  - file: m5_networks/index
-  - file: m6_integer/index
-  - file: appendix_how_this_book_was_made
+parts:
+  - caption: Fall 2026 · Module Hubs
+    chapters:
+      - file: module1_hub/index
+        sections:
+          - file: module1_hub/working_in_course
+          - file: module1_hub/videos
+          - file: module1_hub/skills
+          - file: module1_hub/talking_points
+          - file: module1_hub/studio1
+      - file: module2_hub/index
+        sections:
+          - file: module2_hub/videos
+          - file: module2_hub/skills
+          - file: module2_hub/talking_points
+          - file: module2_hub/studio2
+      - file: module3_hub/index
+        sections:
+          - file: module3_hub/videos
+          - file: module3_hub/skills
+          - file: module3_hub/talking_points
+      - file: module4_hub/index
+        sections:
+          - file: module4_hub/videos
+          - file: module4_hub/skills
+          - file: module4_hub/talking_points
+      - file: module5_hub/index
+        sections:
+          - file: module5_hub/videos
+          - file: module5_hub/skills
+          - file: module5_hub/talking_points
+  - caption: Reference · The Six Topics
+    chapters:
+      - file: m1_foundations/index
+      - file: m2_lp_graphical_simplex/index
+      - file: m3_pyomo_sensitivity/index
+      - file: m4_nonlinear/index
+      - file: m5_networks/index
+      - file: m6_integer/index
+  - caption: Appendix
+    chapters:
+      - file: appendix_how_this_book_was_made

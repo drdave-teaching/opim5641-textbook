@@ -108,10 +108,24 @@ The trail-mix optimizer fills the bag with **coconut flakes and about two raisin
 
 **The lesson:** the model optimizes exactly what you told it to optimize, using exactly the constraints you gave it. When the answer looks absurd, that's not the math failing - it's the model telling you that your constraints were incomplete. Your judgment doesn't leave the room just because you found the optimum.
 
+## 9 · Simplex — the same corners, done with algebra
+
+**Why it exists, in one breath.** The graphical method collapses millions of candidates into a handful of corners — but only in two dimensions. Simplex keeps the *idea* (walk the corners, stop when no neighbor is better) and throws away the *picture*. Algebra doesn't care how many dimensions you have.
+
+**Adjacency is the engine.** Two corner points are adjacent if they share a constraint boundary. Simplex never teleports — it walks edge to edge, corner to adjacent corner, always to a better one. And the **optimality test** is beautifully local: *if no adjacent corner improves $Z$, you're standing on the optimum.* You never have to look at the whole region — just your neighbors. (Remember the graphical observation that the objective climbs and then falls as you walk the region? That's why a local check is enough.)
+
+**Start at "make nothing."** Whenever possible, initialize at the origin. It's Dave's contaminated-site story: the first feasible solution at a polluted site is *do nothing*; the first feasible plan at a factory is *manufacture nothing*. Terrible plan, perfectly feasible — and a legal place to start walking.
+
+**Augmented form is honesty about slack.** Every $\le$ constraint becomes an equation plus a **slack variable** — the unused hours in that plant. Nonbasic = zero, basic = nonzero, and you always have exactly as many basic variables as constraints. The initial basic feasible solution just reads the slack straight off the RHS: Wyndor starts at $(0,0,4,12,18)$ — make nothing, and every plant's capacity sits idle.
+
+**The tableau is bookkeeping, not magic.** One row per constraint, objective in the **bottom row** (house convention — rearranged so the constant is on the right, which is where the negative signs come from). Biggest negative in the bottom row picks the **entering** variable (best bang for the buck). The **minimum ratio test** (RHS ÷ column coefficient, smallest wins) picks the **departing** one — it answers "how far can I push this before I leave the feasible region?" **Gauss-Jordan** is just the algebra of lines: scaling a row doesn't move the line, adding multiples of rows cancels terms, and the only sin is sloppy accounting across a row.
+
+**The Rosetta Stone closes.** Wyndor now solved three ways — 1,681 brute-force combinations, five corners on a graph, and a few tableau pivots — and all three machines print the same answer: **\$36,000 at 2 doors and 6 windows.** When three completely different methods agree, you can trust the answer and you understand the problem.
+
 ---
 
 ## The bridge to what's next
 
-Brute force works, and brute force dies. The graphical method rescued us by drawing a picture instead of enumerating - millions of combinations down to five corner points - but it can only ever handle two decision variables.
+You can now solve an LP three ways by hand, and you know the cost of each: brute force is transparent and slow, the picture is fast and capped at 2-D, Simplex is general but tedious on paper.
 
-So the next stop is **Simplex**: the algebraic extension of the graphical method, walking those same corners in any number of dimensions, long after we can't draw the picture. And **Wyndor Glass** is our Rosetta Stone - you've now solved it with brute force *and* graphically, and you'll solve it a third time with Simplex, so you can watch the same answer (\$36,000 at 2 doors and 6 windows) fall out of three completely different machines.
+So the next stop is **Module 3 — Pyomo**: hand the model to a solver. The data/model split you practiced with dictionaries-and-loops is exactly what Pyomo formalizes, and Simplex is exactly what's running under the hood. Because you did it the hard way first, the solver is a tool you understand rather than a magic spell.

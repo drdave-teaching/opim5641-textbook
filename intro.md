@@ -15,8 +15,16 @@ You're a graduate student or analyst comfortable with Python and basic data work
 
 ## How the book is organized
 
+The book now has **two parts**:
+
+**Part I — Fall 2026 Module Hubs.** One hub per course module, mirroring HuskyCT: the video guide (every lecture, what it covers, which notebook it drives), the skills sheet, the talking points, and the in-person studio pages. **If you're taking the course, live here** — each hub is the module's home base.
+
+**Part II — Reference: The Six Topics.** The topic chapters — foundations, LP by hand, Pyomo & sensitivity, nonlinear, networks, integer — written as prose you can read independently of the course calendar. When a hub says "go deeper," this is where it points.
+
 ```{tableofcontents}
 ```
+
+Part II at a glance:
 
 - **Chapter 1 — Foundations.** The anatomy of an optimization problem, brute-force search, and Monte Carlo simulation for decision-making under uncertainty.
 - **Chapter 2 — Linear Programming: Graphical & Simplex.** The geometry of LP and the algorithm that solves it.

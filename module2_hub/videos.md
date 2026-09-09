@@ -1,4 +1,4 @@
-# Module 2 Video Guide — Brute Force & the Graphical Method
+# Module 2 Video Guide — Brute Force, Graphical & Simplex
 
 **OPIM 5641 - Business Decision Modeling · Dr. Dave Wanik · University of Connecticut**
 
@@ -7,7 +7,7 @@ Module 1 ended with *"when you have data you explore it; when you don't, you sim
 Watch in order; each video drives one stretch of its notebook. The 🔴 markers inside the notebooks show exactly where each video starts.
 
 :::note
-**Recorded 2026-08-04 and 2026-08-06.** Fifteen videos are in the can - titles below match what's in Kaltura (tagged `(BDM_hybrid)`). Transcripts and polished scripts live in `opim5641-transcripts/hybrid_fall2026/async2_module2/`.
+**All three blocks are recorded** (brute force + graphical 2026-08-04/06, simplex 2026-08-10) — **23 videos** total, matching HuskyCT: M2.1 (8 · 42 min), M2.2 (7 · 38 min), M2.3 (8 · 59 min). Transcripts and polished scripts live in `opim5641-transcripts/hybrid_fall2026/async2_module2/` and `async3_module2_simplex/`.
 :::
 
 ## Video 0 · Introduction to Module 2 *(3:58)*
@@ -107,8 +107,42 @@ Two more edge cases live in the folder as self-study. They follow the same recip
 - **Unbounded solutions** — `4_Graphical/f_GraphicalMethod_UnboundedSolutions.ipynb` — when the feasible region runs off to infinity in the direction you're optimizing.
 - **Practice problems** — `4_Graphical/GraphicalMethod_PracticeProblems_Advanced.ipynb`
 
-## Coming next
-**Simplex** — the algebraic extension of the graphical method, walking the same corners in any number of dimensions (objective row on the **bottom**). Notebooks in `5_Simplex/`; that's Async 3.
+## Simplex (M2.3 · Async 3) — recorded 2026-08-10 · 8 videos · 59 min
+
+**The big ideas:** simplex is the graphical method turned into **algebra**, so dimensions stop mattering · it only ever visits **corner point feasible solutions**, moving between **adjacent** corners · the **optimality test**: if no adjacent corner is better, you're done · **augmented form** turns inequalities into equations with **slack variables** · **basic vs. nonbasic** (nonbasic = zero) · the tableau, with the objective in the **bottom row** (the house convention) · entering variable by the biggest negative in the bottom row · departing variable by the **minimum ratio test** · **Gauss-Jordan** row operations to re-read the tableau.
+
+### Notebook · `5_Simplex/0_BigIdeas_Simplex_vs_Graphical.ipynb`
+
+**M2.3 · 1 — Welcome video to Simplex algorithm** *(3:56)*
+The last really math-heavy lecture before we start implementing on real problems. Take stock: brute force was transparent but horribly inefficient; the graphical method was fantastic but dies past two decision variables. Simplex is the pitch: an **algebraic extension of the geometric technique** — same corners, no picture needed, any number of dimensions.
+
+**M2.3 · 2 — The geometry of Simplex** *(6:13)*
+Wyndor again ($3x_1 + 5x_2$, three constraints), but now the vocabulary that runs the whole block: **corner point solutions**, and **adjacency** — two corners are adjacent if they share a constraint boundary. Then the engine of everything: the **optimality test**. *If a corner point feasible solution has no adjacent corner that improves $Z$, it is optimal.* Walk the corners of Wyndor and watch the objective climb, climb, then fall — the property teased back in the graphical videos, now cashed in.
+
+**M2.3 · 3 — Augmented form, basic vs. nonbasic variables** *(8:48)*
+The key concepts before the arithmetic: simplex only visits corner point feasible solutions; it's **iterative**, tracing the edge of the feasible region; and **whenever possible, initialize at the origin** — Dave's environmental-engineering story lands here (at a contaminated site, the first feasible solution is *do nothing*; in manufacturing, *make nothing*). Then augmented form: every inequality becomes an equation with a **slack variable**, nonbasic means zero, basic means nonzero, and the number of basic variables equals the number of constraints.
+
+**M2.3 · 4 — The minimum ratio test** *(8:00)*
+The rules of a basic solution, then the steps to commit to memory: initialize at the origin, apply the optimality test, choose the **entering** variable (biggest bang for the buck in $Z$), and decide **how far you can go** before leaving the feasible region — that's the **minimum ratio test**: right-hand side divided by the entering column's coefficient, smallest ratio wins, and that row's basic variable **departs**.
+
+**M2.3 · 5 — Gauss-Jordan elimination and wrapping up the long-hand math** *(7:47)*
+The point of Gauss-Jordan is simply **readability**: make the entering variable appear once with a coefficient of one, so the tableau can be read like a solution. Multiplying a row by a constant keeps the same line; adding multiples of one row to another cancels terms. Divide the pivot row, add five of it to the objective row, subtract two of it elsewhere — and do the accounting on **every** value across the row. Also where the negative signs in row zero come from: $Z = 3x_1 + 5x_2$ rearranged so a constant sits on the right.
+
+### Notebook · `5_Simplex/1_General Simplex Maximization Steps.ipynb`
+
+**M2.3 · 6 — Your mental map: the general Simplex steps** *(4:45)*
+Hair blown back by the long-hand math? This is the recovery video: the whole algorithm on one slide. Write augmented form → build the initial tableau (one row per constraint plus the objective; one column per decision variable, slack variable, and the RHS) → **look at the bottom row**, circle the biggest negative → minimum ratio test picks the row → Gauss-Jordan → repeat until the bottom row has no negatives. This is the map to keep beside you during the weekly checks.
+
+### Notebook · `5_Simplex/Wyndor_Glass_Simplex_Method.ipynb`
+
+**M2.3 · 7 — Simplex for Wyndor, end to end** *(10:22)*
+"**This is how I would evaluate you** on a quiz, a midterm, or a homework." The compact notation, soup to nuts: augmented form with $x_3, x_4, x_5$ (the first 10 points on an assessment), read off the initial basic feasible solution $(0,0,4,12,18)$, build the tableau, and iterate to the answer you already know is coming — **\$36,000 at (2, 6)**, the Rosetta Stone's third solution.
+
+**M2.3 · 8 — Dave's handwritten Wyndor walkthrough** *(9:33)*
+Page 13 of the [handwritten notes](https://github.com/drdave-teaching/opim-math/blob/main/OPIM5641/worksheets/GraphicalVsSimplex_Wyndor_HandwrittenNotes.pdf) — the same problem in pencil (darkened for legibility), the way you'll do it on paper. Slack variables can be $x_3,x_4,x_5$ or $s_1,s_2,s_3$, your choice; **the objective always goes in the bottom row**. Watch the tableau evolve by hand and check every number against the Python run.
+
+### Reference notebooks (no video — self-study)
+The folder carries the full ladder for practice: `2_TheSimplexMethod_Maximization2D` → `3_..._Maximization_3D` → minimization twins (`4_General Simplex Minimization Steps`, `5_...Minimization2D`, `6_...Minimization3D`) → `7_..._Maximization_Mixed`. Same machinery, more dimensions and both directions.
 
 ## Also in the folder
 - `Introduction to Optimization_DW.ipynb` (+ blank twin) — the original long-form version of the Veerman material; `The Brute Force Method.ipynb` is the polished lecture cut.
