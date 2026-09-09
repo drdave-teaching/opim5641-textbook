@@ -1,22 +1,30 @@
-# Studio 1 — Sep 9 · Data ER + Startup Runway Casino
+# Studio 1 — Sep 9 · Data ER + Retirement Monte Carlo
 
-The in-person half of Module 1. The async carried the mechanics; the studio is where you apply them to problems nobody pre-chewed for you. Bring a laptop that opens Colab, and have your GitHub repo ready (see [Working in this Course](working_in_course.md)).
+The in-person half of Module 1. The async carried the mechanics; the studio is where you apply them to problems nobody pre-chewed for you — the whole course thesis in one evening: *when you have data, explore it; when you don't, simulate it.* Bring a laptop that opens Colab, and have your GitHub repo ready (see [Working in this Course](working_in_course.md)).
 
-## Part 1 · Data ER (~40 min, pairs)
-A messy Connecticut places dataset just rolled into your emergency room - and unlike the async, nobody tells you what's broken. Triage → treat → discharge report (3 plots + one insight), committed to YOUR repo.
+📄 **[Tonight in 20 steps (PDF)](https://raw.githubusercontent.com/drdave-teaching/OPIM5641-notebooks/main/studio1/OPIM5641_Studio1_Tonight_in_20_Steps_BW.pdf)** — the one-page handout we follow in studio.
 
-- Starter: [Data_ER_starter.ipynb](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Studios/Studio1_DataER/Data_ER_starter.ipynb) · [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Studios/Studio1_DataER/Data_ER_starter.ipynb)
-- The patient: [ct_places_messy.csv](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Studios/Studio1_DataER/ct_places_messy.csv) *(loads automatically from the starter)*
+## Part 1 · Data ER: PPP loans in Connecticut (~40 min, pairs)
 
-## Part 2 · Startup Runway Casino (~40 min, solo founders)
-You just founded a startup. Pick your assumptions - starting cash, a revenue distribution, a burn distribution - simulate 10,000 parallel universes, and put **P(survive 12 months)** on the leaderboard. Highest survival probability *with a defensible story* wins.
+117,888 real SBA Paycheck Protection Program loans made to Connecticut businesses — public data, dirt included: missing industry codes, suspicious job counts, cities spelled three ways. Triage → describe the money → who got it, where, and how many dollars per job. Deliverable: **three findings**, each one plot or table plus two sentences, saved to YOUR repo.
 
-- Starter: [Startup_Casino_starter.ipynb](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/Studios/Studio1_StartupCasino/Startup_Casino_starter.ipynb) · [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/Studios/Studio1_StartupCasino/Startup_Casino_starter.ipynb)
+- Starter: [Studio1_PPP_DataER_blank.ipynb](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/studio1/Studio1_PPP_DataER_blank.ipynb) · [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/studio1/Studio1_PPP_DataER_blank.ipynb) · [filled version](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/studio1/Studio1_PPP_DataER.ipynb) to catch up from
+- The patient: [ppp_ct.csv](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/studio1/ppp_ct.csv) *(loads automatically from the starter)*
+- 📖 [Data dictionary](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/studio1/ppp_data_dictionary.md) — official SBA descriptions for all 53 columns, plus which ones to distrust and why missing ≠ zero
 
-## The weekly handwritten check
-~15 minutes, by hand. This week's skills and their practice worksheets (with fully-worked keys) live in [opim-math](https://github.com/drdave-teaching/opim-math):
+## Part 2 · Retirement Monte Carlo (~35 min)
 
-- [EDA descriptive stats](https://github.com/drdave-teaching/opim-math/blob/main/OPIM5641/worksheets/EDA_DescriptiveStats_ByHand_worksheet.pdf) - phantom rows, five-number summary, mean vs. median ([key](https://github.com/drdave-teaching/opim-math/blob/main/OPIM5641/worksheets/EDA_DescriptiveStats_ByHand_key.pdf))
-- [Monte Carlo percentiles](https://github.com/drdave-teaching/opim-math/blob/main/OPIM5641/worksheets/MC_Percentiles_ByHand_worksheet.pdf) - read sim output like a consultant + the one-line nonparametric swap ([key](https://github.com/drdave-teaching/opim-math/blob/main/OPIM5641/worksheets/MC_Percentiles_ByHand_key.pdf))
+Your balance in 35 years is data you *don't* have. Build the simulation in three escalations — one 35-year path, then 10,000 futures with percentile lines and the spaghetti plot, then the twist: swap `np.random.normal(0.07, 0.20)` for a bootstrap of **98 years of real S&P 500 total returns** (`sp['sp500_total_return'].sample(n=years, replace=True)` — the M1.2 move) and watch what fat tails do to *P(you retire comfortably)*. Finish by answering a life question **with a probability**, not a single number.
+
+- Starter: [Studio1_Retirement_MC_blank.ipynb](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/studio1/Studio1_Retirement_MC_blank.ipynb) · [GitHub](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/studio1/Studio1_Retirement_MC_blank.ipynb) · [filled version](https://colab.research.google.com/github/drdave-teaching/OPIM5641-notebooks/blob/main/studio1/Studio1_Retirement_MC.ipynb)
+- Real returns: [sp500_annual_returns.csv](https://github.com/drdave-teaching/OPIM5641-notebooks/blob/main/studio1/sp500_annual_returns.csv) — annual S&P 500 total returns 1928–2025, dividends included
+
+## The GitHub habit (twice tonight)
+
+Open the starter from the course repo in Colab → work → **File → Save a copy in GitHub** → your `opim5641-work` repo. Once after Part 1, once at wrap. That one loop — open from GitHub, work, save to *your* repo — is the portfolio habit for the whole course; nothing about branches tonight.
+
+## The handwritten check
+
+**Math Check #1** (California Housing descriptive stats — percentiles, mean vs. median by hand) is due this week: hand your paper in at the studio, or upload your scan to HuskyCT by **Friday, Sept 11**. From Studio 2 onward the math check is the walk-in ritual: sit down, pencil out, hand it over.
 
 *The hook into next module: when you have data, you explore it. When you don't, you simulate it. When you must DECIDE... that's optimization.*
