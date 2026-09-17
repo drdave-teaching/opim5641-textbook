@@ -1,0 +1,634 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Module 4 Video Guide — Nonlinear &amp; Portfolio &#8212; Business Decision Modeling — Optimization with Python</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'module4_hub/videos';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Module 4 Skills Sheet — Nonlinear &amp; Portfolio" href="skills.html" />
+    <link rel="prev" title="Module 4 Hub — Nonlinear &amp; Portfolio Optimization (Fall 2026)" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Business Decision Modeling — Optimization with Python</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Preface
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fall 2026 · Module Hubs</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../module1_hub/index.html">Module 1 Hub — EDA &amp; Monte Carlo (Fall 2026)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../module1_hub/working_in_course.html">Working in this Course — Colab, GitHub, and Saving Your Work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module1_hub/videos.html">Module 1 Video Guide — What Each Video Covers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module1_hub/skills.html">Module 1 Skills Sheet — What You Can Do Now</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module1_hub/talking_points.html">Module 1 Talking Points — The Theory You Should Be Able to Explain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module1_hub/studio1.html">Studio 1 — Sep 9 · Data ER + Retirement Monte Carlo</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../module2_hub/index.html">Module 2 Hub — Solving LPs by Hand (Fall 2026)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../module2_hub/videos.html">Module 2 Video Guide — Brute Force, Graphical &amp; Simplex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module2_hub/skills.html">Module 2 Skills Sheet — Brute Force &amp; the Graphical Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module2_hub/talking_points.html">Module 2 Talking Points — Brute Force &amp; the Graphical Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module2_hub/studio2.html">Studio 2 — Sep 23 · Feel the Explosion + Messy Constraints</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../module3_hub/index.html">Module 3 Hub — LP in Pyomo (Fall 2026)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../module3_hub/videos.html">Module 3 Video Guide — LP in Pyomo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module3_hub/skills.html">Module 3 Skills Sheet — LP in Pyomo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module3_hub/talking_points.html">Module 3 Talking Points — LP in Pyomo</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Module 4 Hub — Nonlinear &amp; Portfolio Optimization (Fall 2026)</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Module 4 Video Guide — Nonlinear &amp; Portfolio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skills.html">Module 4 Skills Sheet — Nonlinear &amp; Portfolio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="talking_points.html">Module 4 Talking Points — Nonlinear &amp; Portfolio</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../module5_hub/index.html">Module 5 Hub — Integer Programming (Fall 2026)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../module5_hub/videos.html">Module 5 Video Guide — Integer Programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module5_hub/skills.html">Module 5 Skills Sheet — Integer Programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module5_hub/talking_points.html">Module 5 Talking Points — Integer Programming</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference · The Six Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../m1_foundations/index.html">Chapter 1 — Foundations of Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m2_lp_graphical_simplex/index.html">Chapter 2 — Linear Programming: Graphical Method &amp; Simplex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m3_pyomo_sensitivity/index.html">Chapter 3 — Linear Programming in Pyomo &amp; Sensitivity Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m4_nonlinear/index.html">Chapter 4 — Nonlinear Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m5_networks/index.html">Chapter 5 — Network Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../m6_integer/index.html">Chapter 6 — Integer Programming</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../appendix_how_this_book_was_made.html">Appendix — How This Book Was Made</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/drdave-teaching/opim5641-textbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/module4_hub/videos.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Module 4 Video Guide — Nonlinear & Portfolio</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#m4-1-nonlinear-optimization-6-videos-41-min">M4.1 — Nonlinear Optimization (6 videos · 41 min)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-7-nonlinear-polynomial-ipynb">Notebook · <code class="docutils literal notranslate"><span class="pre">7_Nonlinear/Polynomial.ipynb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-7-nonlinear-pharmacy-complete-guided-ipynb">Notebook · <code class="docutils literal notranslate"><span class="pre">7_Nonlinear/Pharmacy</span> <span class="pre">-</span> <span class="pre">Complete_guided.ipynb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notebooks-7-nonlinear-location-problem-simple-guided-ipynb-location-problem-advanced-guided-ipynb">Notebooks · <code class="docutils literal notranslate"><span class="pre">7_Nonlinear/Location</span> <span class="pre">Problem_Simple_guided.ipynb</span></code> → <code class="docutils literal notranslate"><span class="pre">Location</span> <span class="pre">Problem_Advanced_guided.ipynb</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#m4-2-portfolio-optimization-ms-womack-4-videos">M4.2 — Portfolio Optimization: Ms. Womack (4 videos)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-7-nonlinear-portfolio-allocation-womack-ipynb">Notebook · <code class="docutils literal notranslate"><span class="pre">7_Nonlinear/Portfolio_Allocation_Womack.ipynb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-7-nonlinear-2-covariance-and-correlation-ipynb">Notebook · <code class="docutils literal notranslate"><span class="pre">7_Nonlinear/2_Covariance_and_Correlation.ipynb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Notebook · <code class="docutils literal notranslate"><span class="pre">7_Nonlinear/Portfolio_Allocation_Womack.ipynb</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="module-4-video-guide-nonlinear-portfolio">
+<h1>Module 4 Video Guide — Nonlinear &amp; Portfolio<a class="headerlink" href="#module-4-video-guide-nonlinear-portfolio" title="Link to this heading">#</a></h1>
+<p><strong>OPIM 5641 - Business Decision Modeling · Dr. Dave Wanik · University of Connecticut</strong></p>
+<p>Two blocks. <strong>M4.1</strong> bends the world — regression as optimization, and distance-based location problems. <strong>M4.2</strong> is the payoff: Ms. Womack’s portfolio, real modern portfolio theory with a quadratic risk term.</p>
+<div class="note docutils">
+<p><strong>Recorded 2026-08-11 (M4.1) and 2026-08-17 (M4.2).</strong> Ten videos total, matching HuskyCT. Transcripts and polished scripts live in <code class="docutils literal notranslate"><span class="pre">opim5641-transcripts/hybrid_fall2026/async5_module4_1/</span></code> and <code class="docutils literal notranslate"><span class="pre">async6_module4_2/</span></code>.</p>
+</div>
+<section id="m4-1-nonlinear-optimization-6-videos-41-min">
+<h2>M4.1 — Nonlinear Optimization (6 videos · 41 min)<a class="headerlink" href="#m4-1-nonlinear-optimization-6-videos-41-min" title="Link to this heading">#</a></h2>
+<section id="notebook-7-nonlinear-polynomial-ipynb">
+<h3>Notebook · <code class="docutils literal notranslate"><span class="pre">7_Nonlinear/Polynomial.ipynb</span></code><a class="headerlink" href="#notebook-7-nonlinear-polynomial-ipynb" title="Link to this heading">#</a></h3>
+<p><strong>M4.1 · 1 — Polynomial, and what makes a model nonlinear</strong> <em>(7:51)</em>
+Why nonlinear at all: not every process is a straight line — powers, roots, exponents, stepwise pieces — and if any of those are in your problem, a linear solver won’t take it. Sometimes one curve beats a pile of stitched linear pieces. Then <strong>the three rules of this module</strong>: (1) <strong>initialize</strong> your decision variables, and try different starting values — the polynomial example shows the solver settling into a <em>local</em> optimum that depends on where it started; (2) <strong>bound</strong> your variables to help convergence; (3) if a linear model will do the job, <strong>use the linear model</strong>.</p>
+</section>
+<section id="notebook-7-nonlinear-pharmacy-complete-guided-ipynb">
+<h3>Notebook · <code class="docutils literal notranslate"><span class="pre">7_Nonlinear/Pharmacy</span> <span class="pre">-</span> <span class="pre">Complete_guided.ipynb</span></code><a class="headerlink" href="#notebook-7-nonlinear-pharmacy-complete-guided-ipynb" title="Link to this heading">#</a></h3>
+<p><strong>M4.1 · 2 — Setting up our first regression</strong> <em>(8:18)</em>
+Regression as optimization — the bridge to every stats class you’ve taken. CVS pharmacy staffing: <span class="math notranslate nohighlight">\(y = a + bx\)</span>, find the <span class="math notranslate nohighlight">\(a\)</span> (intercept) and <span class="math notranslate nohighlight">\(b\)</span> (slope) that <strong>minimize the sum of squared errors</strong>. Error is a distance; squaring it keeps it positive and punishes outliers. The Pyomo trick: <span class="math notranslate nohighlight">\(y\)</span> is a <strong>placeholder decision variable</strong>, one per store.</p>
+<p><strong>M4.1 · 3 — Different flavors of objective function</strong> <em>(7:48)</em>
+How the placeholder gets its meaning: ten constraints — one per row — each forcing <em>prediction minus the linear form of the model</em> to equal zero, with <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> shared across every row. The constraints enforce the model’s shape; the objective just sums the squared gaps. Once you see that, swapping the model’s form or the error metric is a one-line change.</p>
+<p><strong>M4.1 · 4 — Wrapping up regression as optimization</strong> <em>(3:37)</em>
+Two more flavors: <strong>absolute error</strong> instead of squared (looks “better” — but careful, the two objectives are in different units and can’t be compared directly), and the gloriously overboard <strong>mess of polynomials</strong> — seven power terms hard-coded at once, because when the model is an optimization problem you can try anything. Blue line vs. green line, and Dave still likes the blue.</p>
+</section>
+<section id="notebooks-7-nonlinear-location-problem-simple-guided-ipynb-location-problem-advanced-guided-ipynb">
+<h3>Notebooks · <code class="docutils literal notranslate"><span class="pre">7_Nonlinear/Location</span> <span class="pre">Problem_Simple_guided.ipynb</span></code> → <code class="docutils literal notranslate"><span class="pre">Location</span> <span class="pre">Problem_Advanced_guided.ipynb</span></code><a class="headerlink" href="#notebooks-7-nonlinear-location-problem-simple-guided-ipynb-location-problem-advanced-guided-ipynb" title="Link to this heading">#</a></h3>
+<p><strong>M4.1 · 5 — The simple warehouse location problem</strong> <em>(6:26)</em>
+The classic: a paper company with 10 big-box stores needs a distribution center. <strong>Distance is a square root</strong> — inherently nonlinear — so minimizing total distance to all stores needs a nonlinear solver. Find the centroid; simple version first, business rules later.</p>
+<p><strong>M4.1 · 6 — The weighted warehouse location problem</strong> <em>(6:39)</em>
+Solve it: total distance <strong>670</strong> with the warehouse at <strong>(114, 35)</strong> — bing, right in the middle. Then the better question: stores aren’t equal. Weight each store by its <strong>delivery volume</strong> and watch the warehouse slide toward the store doing 90% of the business. Same model, one weighting, much smarter answer.</p>
+</section>
+</section>
+<section id="m4-2-portfolio-optimization-ms-womack-4-videos">
+<h2>M4.2 — Portfolio Optimization: Ms. Womack (4 videos)<a class="headerlink" href="#m4-2-portfolio-optimization-ms-womack-4-videos" title="Link to this heading">#</a></h2>
+<section id="notebook-7-nonlinear-portfolio-allocation-womack-ipynb">
+<h3>Notebook · <code class="docutils literal notranslate"><span class="pre">7_Nonlinear/Portfolio_Allocation_Womack.ipynb</span></code><a class="headerlink" href="#notebook-7-nonlinear-portfolio-allocation-womack-ipynb" title="Link to this heading">#</a></h3>
+<p><strong>M4.2 · 1 — Intro to Ms. Womack</strong> <em>(4:25)</em>
+The pretend-you’re-a-millionaire exercise (the ones where students pay the most attention). You’re advising a client who’s picked <strong>five stocks in five industries</strong> — computer, chemical, power, auto, electronic — with <strong>two years of monthly returns</strong> each. The data: some average a strong monthly return, some barely beat a savings bond. The question is not “which is best” — it’s <strong>how much of each</strong>.</p>
+</section>
+<section id="notebook-7-nonlinear-2-covariance-and-correlation-ipynb">
+<h3>Notebook · <code class="docutils literal notranslate"><span class="pre">7_Nonlinear/2_Covariance_and_Correlation.ipynb</span></code><a class="headerlink" href="#notebook-7-nonlinear-2-covariance-and-correlation-ipynb" title="Link to this heading">#</a></h3>
+<p><strong>M4.2 · 2 — Correlation and covariance</strong> <em>(6:33)</em>
+You can’t maximize return <em>and</em> minimize risk in one objective — you must pick one and constrain the other. So: maximize return subject to <strong>risk buckets</strong>. But what is risk? The Caribbean parable: <strong>umbrellas and ice cream</strong> both make 10% a year and each loses money in its off-season — hold both and the seasons cancel. That’s <strong>negative covariance</strong> doing the work, and it’s the heart of modern portfolio theory: the right <em>pair</em> is safer than either stock alone.</p>
+</section>
+<section id="id1">
+<h3>Notebook · <code class="docutils literal notranslate"><span class="pre">7_Nonlinear/Portfolio_Allocation_Womack.ipynb</span></code><a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p><strong>M4.2 · 3 — Building the model and calc_risk</strong> <em>(7:36)</em>
+The build: decision variables are the <strong>proportions</strong> invested in each stock; the objective is the proportion-weighted average return; proportions sum to one; and <strong>risk = the covariance matrix weighted by the proportions, summed</strong> — for two stocks, all four cells: <span class="math notranslate nohighlight">\(Cov(A,A)p_A p_A + Cov(A,B)p_A p_B + Cov(B,A)p_B p_A + Cov(B,B)p_B p_B\)</span>. That’s <code class="docutils literal notranslate"><span class="pre">calc_risk</span></code>, and it’s quadratic — hence the nonlinear solver. (The even-split vs. concentrated comparison lives in the notebook as DEMO 1 and DEMO 2.)</p>
+<p><strong>M4.2 · 4 — First outputs and the frontier</strong> <em>(5:11)</em>
+Run it in a loop: for each risk cap <span class="math notranslate nohighlight">\(r\)</span>, constrain risk ≤ <span class="math notranslate nohighlight">\(r\)</span>, maximize return, store the allocation. Sweep 100 risk levels and the (risk, return) pairs trace the <strong>efficient frontier</strong> — more risk buys more return, with visibly diminishing payoff. Every point is a defensible portfolio; where your client sits on the curve is her call, not the model’s. Keep the <a class="reference external" href="https://raw.githubusercontent.com/drdave-teaching/OPIM5641-notebooks/main/figures/womack_methodology.png">methodology figure</a> open while you watch.</p>
+<hr class="docutils" />
+<p><em>Companions: <a class="reference internal" href="skills.html"><span class="std std-doc">skills sheet</span></a> · <a class="reference internal" href="talking_points.html"><span class="std std-doc">talking points</span></a></em></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./module4_hub"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Module 4 Hub — Nonlinear &amp; Portfolio Optimization (Fall 2026)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="skills.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Module 4 Skills Sheet — Nonlinear &amp; Portfolio</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#m4-1-nonlinear-optimization-6-videos-41-min">M4.1 — Nonlinear Optimization (6 videos · 41 min)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-7-nonlinear-polynomial-ipynb">Notebook · <code class="docutils literal notranslate"><span class="pre">7_Nonlinear/Polynomial.ipynb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-7-nonlinear-pharmacy-complete-guided-ipynb">Notebook · <code class="docutils literal notranslate"><span class="pre">7_Nonlinear/Pharmacy</span> <span class="pre">-</span> <span class="pre">Complete_guided.ipynb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notebooks-7-nonlinear-location-problem-simple-guided-ipynb-location-problem-advanced-guided-ipynb">Notebooks · <code class="docutils literal notranslate"><span class="pre">7_Nonlinear/Location</span> <span class="pre">Problem_Simple_guided.ipynb</span></code> → <code class="docutils literal notranslate"><span class="pre">Location</span> <span class="pre">Problem_Advanced_guided.ipynb</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#m4-2-portfolio-optimization-ms-womack-4-videos">M4.2 — Portfolio Optimization: Ms. Womack (4 videos)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-7-nonlinear-portfolio-allocation-womack-ipynb">Notebook · <code class="docutils literal notranslate"><span class="pre">7_Nonlinear/Portfolio_Allocation_Womack.ipynb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-7-nonlinear-2-covariance-and-correlation-ipynb">Notebook · <code class="docutils literal notranslate"><span class="pre">7_Nonlinear/2_Covariance_and_Correlation.ipynb</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Notebook · <code class="docutils literal notranslate"><span class="pre">7_Nonlinear/Portfolio_Allocation_Womack.ipynb</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr. Dave Wanik · University of Connecticut (OPIM 5641)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <p style="font-size:0.9em;opacity:0.85"><strong>⚠️ Work in progress.</strong> These are living draft materials — actively being written and revised. Expect rough edges, gaps, and changes; this is a teaching companion, not a final or official reference.</p>
+<p><em>OPIM 5641 — Business Decision Modeling. Built from Dr. Wanik's lecture transcripts and course notebooks.</em></p>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
