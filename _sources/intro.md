@@ -1,0 +1,52 @@
+# Preface
+
+:::{admonition} ⚠️ Work in progress
+:class: warning
+These materials are a **living draft** — actively being written, revised, and expanded from my lecture transcripts and course notebooks. Expect rough edges, gaps, and changes between visits. This is a teaching companion, **not a final or official reference**. Spot something off? That's expected — it's a work in progress!
+:::
+
+Welcome to **Business Decision Modeling — Optimization with Python**, the book edition of **OPIM 5641** at the University of Connecticut.
+
+Optimization is the science of making the **best possible decision** subject to the constraints of the real world — how many chairs and desks to build, where to put a warehouse, how to route product through a supply chain, which projects to fund. This book teaches you to take a messy business problem, translate it into a precise mathematical model, and solve it in Python with **Pyomo**. The voice is casual; the modeling is rigorous; the code is real and runs.
+
+## Who this book is for
+
+You're a graduate student or analyst comfortable with Python and basic data work. You don't need a background in operations research — we build every concept from the ground up, starting with the four building blocks that appear in *every* optimization problem in this book.
+
+## How the book is organized
+
+The book now has **two parts**:
+
+**Part I — Fall 2026 Module Hubs.** One hub per course module, mirroring HuskyCT: the video guide (every lecture, what it covers, which notebook it drives), the skills sheet, the talking points, and the in-person studio pages. **If you're taking the course, live here** — each hub is the module's home base.
+
+**Part II — Reference: The Six Topics.** The topic chapters — foundations, LP by hand, Pyomo & sensitivity, nonlinear, networks, integer — written as prose you can read independently of the course calendar. When a hub says "go deeper," this is where it points.
+
+```{tableofcontents}
+```
+
+Part II at a glance:
+
+- **Chapter 1 — Foundations.** The anatomy of an optimization problem, brute-force search, and Monte Carlo simulation for decision-making under uncertainty.
+- **Chapter 2 — Linear Programming: Graphical & Simplex.** The geometry of LP and the algorithm that solves it.
+- **Chapter 3 — LP in Pyomo & Sensitivity Analysis.** Building real models in code, and reading the shadow prices and reduced costs that tell you *what your constraints are worth*.
+- **Chapter 4 — Nonlinear Optimization.** When the world isn't linear: facility location, portfolio allocation, and regression as optimization.
+- **Chapter 5 — Network Optimization.** Minimum-cost flow, assignment, shortest path, and transshipment.
+- **Chapter 6 — Integer Programming.** Whole-number decisions, set covering, and the binary "activation" variables that model yes/no choices.
+
+## How to read it
+
+Read with a notebook open and **Pyomo + a solver installed** (CBC for linear/integer, Ipopt for nonlinear). When you hit a model, type it out — the goal is for the modeling pattern to come out of your fingertips. When you hit a **math callout**, don't skip it; the formulations *are* the subject. All code is drawn from the course notebooks on the [`drdave-teaching`](https://github.com/drdave-teaching) GitHub account.
+
+Let's go model some decisions.
+
+— *Dave*
+
+:::{admonition} 🎬 Start here — Welcome from Dr. Dave
+:class: tip
+Before anything else, watch the **course welcome video** (on HuskyCT, ~3 minutes). It covers who I am,
+how this class went from an Excel course to a full Python course, and the arc of the whole semester:
+level set → Monte Carlo → brute force → graphical → Simplex → nonlinear → portfolio → integer programming
+→ the final project.
+
+Then read [Working in this Course](module1_hub/working_in_course.md) so you know how to run and **save** your work.
+:::
