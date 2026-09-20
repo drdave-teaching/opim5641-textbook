@@ -9,25 +9,32 @@ The in-person half of Module 2. You've watched brute force grind, drawn feasible
 
 ## The walk-in ritual · Math check (~10 min)
 
-From this studio on, the handwritten math check is how we open: sit down, work it by hand, hand it over. This week's check draws on Module 2 — expect to formulate a small LP from a word problem and walk the graphical recipe (plot, shade with a test point, corners, plug and chug).
+From this studio on, the handwritten math check is how we open: sit down, work it by hand, hand it over. This week's check is a short loop trace: read a nested `for` loop and write down exactly what it prints. It is the same loop shape we use minutes later to search every production plan.
 
-## Part 1 · Feel the Explosion: the Stamford delivery tour (~45 min)
+## Part 1 · One problem, two methods (~60 min)
 
-You run deliveries out of UConn Stamford: visit every stop once, come back, drive the fewest miles.
-In pairs, on two teams with two different maps: **Team A** heads west (Greenwich, Cos Cob, Port Chester,
-Rye, Armonk) and **Team B** heads north and east (Darien, New Canaan, Norwalk, Westport, Ridgefield).
-The distances are real driving miles.
+We take **Flair's Furniture** — the tables-and-chairs example from the M2.2 videos — and solve it twice.
 
-1. **On paper:** 3 stops, all 6 orders, find the shortest loop.
-2. ✅ **The success:** 5 stops is 120 routes. Brute force is instant and guaranteed to find the best.
-3. **The ramp:** add one stop at a time and time it. 10 stops is 3.6 million routes, and you'll wait.
-4. ❌ **The wall:** all 12 stops. Estimate before you run: about half an hour. 20 stops: hundreds of thousands of years.
-5. **The escape hatch:** always drive to the nearest unvisited stop. Instant, but not the best route. How much worse?
+First, on paper with your partner: name the pieces. What are the **decision variables**? What is the
+**objective function**, and what do its **coefficients** actually mean? Write every **constraint** with its
+units, and don't forget non-negativity. Every LP for the rest of the course has these same parts; only the
+story changes.
 
-At the wrap the two teams compare: different maps, **same cliff**. The explosion is about *how many*
-stops, not *where* they are.
+Then the same problem, two ways:
 
-📓 Notebook: `studio2/Studio2_DeliveryTour_blank.ipynb` in the course notebooks repo.
+1. **Brute force.** A nested loop over every production plan — 481,401 of them — keeping the best legal one.
+   It is the same loop shape you traced by hand in the warm-up, with something useful inside.
+2. **The graphical method.** Draw the four constraints, shade the feasible region, and evaluate the five
+   **corner points**.
+
+Both answer **320 tables and 360 chairs, $4,040**. One checked half a million plans; the other checked five.
+That contrast *is* the lesson: the corner-point property means the winner can only ever be at a corner.
+
+Then we add **desks**, a third product. Brute force just adds another loop. The picture, though, is gone —
+three variables need three axes, and a real product mix has dozens. That is exactly the gap the Simplex
+method fills.
+
+📓 Notebook: `studio2/Studio2_TwoWays_blank.ipynb` in the course notebooks repo.
 
 ## Part 2 · Messy constraints (~40 min)
 
