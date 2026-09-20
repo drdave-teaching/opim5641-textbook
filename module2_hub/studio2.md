@@ -30,9 +30,9 @@ Then the same problem, two ways:
 Both answer **320 tables and 360 chairs, $4,040**. One checked half a million plans; the other checked five.
 That contrast *is* the lesson: the corner-point property means the winner can only ever be at a corner.
 
-Then we add **desks**, a third product. Brute force just adds another loop. The picture, though, is gone —
-three variables need three axes, and a real product mix has dozens. That is exactly the gap the Simplex
-method fills.
+The closing question writes itself: the graphical method only works with **two** decision variables.
+What would you do with ten products, when there is no picture to draw? That gap is exactly what the
+Simplex method fills.
 
 📓 Notebook: `studio2/Studio2_TwoWays_blank.ipynb` in the course notebooks repo.
 
